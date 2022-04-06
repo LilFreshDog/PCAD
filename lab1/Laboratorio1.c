@@ -103,13 +103,14 @@ float** mulMatrices(float** matrix1, float** matrix2, int rows1, int cols1, int 
   for (int i = 0; i < threads_num; i++){
     (&param)->row_end += rows_for_threads[i];
     pthread_create(&my_threads[i],NULL,mulRowsCols, &param);
+    pthread_join(my_threads[i], NULL);
     (&param)->row_start += rows_for_threads[i];
   }
 
   //waiting for all of them to finish
-  for(int i = 0; i < threads_num; i++){
-    pthread_join(my_threads[i], NULL);
-  }
+  //for(int i = 0; i < threads_num; i++){
+  //  pthread_join(my_threads[i], NULL);
+  //}
 
   return matrix3;
 }
@@ -132,14 +133,33 @@ int main(int argc, char const *argv[])
   rowsC = colsB;
   colsC = rowsA;
 
+  //chiediamo con quanti thread deve essere calcolata la moltiplicazione
   printf("\n\n🚀Number of threads : ");
   scanf("%d", &threads_num);
 
+  //creaiamo le matrici
   float **matrixA = createMatrix(rowsA,colsA);
   float **matrixB = createMatrix(rowsB,colsB);
   float **matrixC = createMatrix(rowsC,colsC);
-  float **matrixAB = mulMatrices(matrixA, matrixB, rowsA, colsA, rowsB, colsB, threads_num);
   
+  //calcoliamo con i threads
+  double time_spent = 0.0;
+  clock_t begin = clock();
+  float **matrixAB = mulMatrices(matrixA, matrixB, rowsA, colsA, rowsB, colsB, threads_num);
+  clock_t end = clock();
+  time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
+ 
+  //calcoliamo senza i threads
+  double time_spent2 = 0.0;
+  float **matrixAB2 = createMatrix(rowsA,colsB);
+  thread_param_t param = {matrixA, rowsA, colsA, matrixB, colsB, matrixAB2, 0, rowsA};
+  clock_t begin2 = clock();
+  mulRowsCols(&param);
+  clock_t end2 = clock();
+  time_spent2 += (double)(end2 - begin2) / CLOCKS_PER_SEC;
+
+  //stampa dei risultati
+  /*
   printf("\n\n✅ MATRIX A");
   printf("\n\n\n");
   printMatrix(matrixA, rowsA, colsA);
@@ -150,6 +170,10 @@ int main(int argc, char const *argv[])
   printf("\n\n✅ MATRIX AB");
   printf("\n\n\n");
   printMatrix(matrixAB, rowsA, colsB);
+  */
+  printf("\n\n\n");
+  printf("Matrices calulated with threads : %f\n\n", time_spent);
+  printf("Matrices calulated without threads : %f\n\n", time_spent2);
 
   return 0;
 }
