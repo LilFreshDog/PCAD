@@ -35,9 +35,11 @@ float** createMatrix(int rows, int cols){
 
 void printMatrix(float** matrix, int rows, int cols){
   for(int i = 0;i<rows;i++) {
+    printf("[  ");
     for(int j = 0;j<cols;j++) {
-      printf("%f  -   ",matrix[i][j]);
+      printf("%f   |   ",matrix[i][j]);
     }
+    printf("  ]\n");
     printf("\n");
   }
 }
@@ -92,7 +94,7 @@ float** mulMatrices(float** matrix1, float** matrix2, int rows1, int cols1, int 
   //creating an array of threads
   pthread_t * my_threads = (pthread_t*) malloc(threads_num * sizeof(pthread_t));
   for (int i = 0; i < threads_num; i++){
-    pthread_t my_thread;
+    pthread_t my_thread = NULL;
     my_threads[i] = my_thread;
   }
 
@@ -116,12 +118,13 @@ int main(int argc, char const *argv[])
 {
   srand(time(0));
   int rowsA, colsA, rowsB, colsB, rowsC, colsC, threads_num;
-  printf("🚀Insert number of rows and columns of first matrix (pressing enter between the two):\n");
+  printf("\n\n🚀Rows of the first matrix : ");
   scanf("%d", &rowsA);
+  printf("\n\n🚀Columns of the first matrix : ");
   scanf("%d", &colsA);
   
   //il numero di righe della matrice B deve essere uguale al numero di colonne della matrice A
-  printf("🚀Insert number of columns of first matrix (pressing enter between the two):\n");
+  printf("\n\n🚀Columns of the second matrix : ");
   rowsB = colsA;
   scanf("%d", &colsB);
 
@@ -129,22 +132,23 @@ int main(int argc, char const *argv[])
   rowsC = colsB;
   colsC = rowsA;
 
-  printf("🚀Insert the number of threads:\n");
+  printf("\n\n🚀Number of threads : ");
   scanf("%d", &threads_num);
 
   float **matrixA = createMatrix(rowsA,colsA);
   float **matrixB = createMatrix(rowsB,colsB);
   float **matrixC = createMatrix(rowsC,colsC);
+  float **matrixAB = mulMatrices(matrixA, matrixB, rowsA, colsA, rowsB, colsB, threads_num);
   
+  printf("\n\n✅ MATRIX A");
   printf("\n\n\n");
   printMatrix(matrixA, rowsA, colsA);
+  printf("\n\n✅ MATRIX B");
   printf("\n\n\n");
   printMatrix(matrixB, rowsB, colsB);
   printf("\n\n\n");
-  printf("RESULT");
+  printf("\n\n✅ MATRIX AB");
   printf("\n\n\n");
-
-  float **matrixAB = mulMatrices(matrixA, matrixB, rowsA, colsA, rowsB, colsB, threads_num);
   printMatrix(matrixAB, rowsA, colsB);
 
   return 0;
