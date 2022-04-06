@@ -1,8 +1,10 @@
+CFLAGS=-O0 -Wall -pedantic -Werror
+
 main: main.o
-	gcc main.o -o main -lpthread
+	$(CC) $(CFLAGS) main.o -o main -lpthread
 
 main.o: Laboratorio1.c
-	gcc -c Laboratorio1.c -o main.o
+	gcc -c Laboratorio1.c -o main.o -Wall -Werror
 
 clean:
 	rm -f main main.o
