@@ -103,14 +103,13 @@ float** mulMatrices(float** matrix1, float** matrix2, int rows1, int cols1, int 
   for (int i = 0; i < threads_num; i++){
     (&param)->row_end += rows_for_threads[i];
     pthread_create(&my_threads[i],NULL,mulRowsCols, &param);
-    pthread_join(my_threads[i], NULL);
     (&param)->row_start += rows_for_threads[i];
   }
 
   //waiting for all of them to finish
-  //for(int i = 0; i < threads_num; i++){
-  //  pthread_join(my_threads[i], NULL);
-  //}
+  for(int i = 0; i < threads_num; i++){
+    pthread_join(my_threads[i], NULL);
+  }
 
   return matrix3;
 }
@@ -167,10 +166,11 @@ int main(int argc, char const *argv[])
   printf("\n\n\n");
   printMatrix(matrixB, rowsB, colsB);
   printf("\n\n\n");
+  */  
   printf("\n\n✅ MATRIX AB");
   printf("\n\n\n");
   printMatrix(matrixAB, rowsA, colsB);
-  */
+  
   printf("\n\n\n");
   printf("Matrices calulated with threads : %f\n\n", time_spent);
   printf("Matrices calulated without threads : %f\n\n", time_spent2);
