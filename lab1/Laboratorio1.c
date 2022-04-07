@@ -62,7 +62,7 @@ int* rowsForThread(int rows, int threads_num){
 void* mulRowsCols(void* arguments){
 
   thread_param_t *param = arguments;
-  int row_col_result = 0;
+  float row_col_result = 0;
   //cicliamo sulla porzione di righe della prima matrice che ci interessa
   for(int i = param->row_start; i < param->row_end; i++){
     //cicliamo per il numero di colonne della seconda matrice perchè dobbiamo moltiplicare la singola riga per tutte le colonne di B
