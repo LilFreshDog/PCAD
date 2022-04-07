@@ -33,17 +33,15 @@ float** createMatrix(int rows, int cols){
   return matrix;
 }
 
-void printMatrix(float** matrix, int rows, int cols){
-  for(int i = 0;i<rows;i++) {
-    printf("[  ");
-    for(int j = 0;j<cols;j++) {
-      printf("%f   |   ",matrix[i][j]);
+void printMatrix(float **matrix, int rows, int cols) {
+  for (int i = 0; i < rows; i++) {
+    printf("[ ");
+    for (int j = 0; j < cols; j++) {
+      j == cols - 1 ? printf("%f ]\n", matrix[i][j]) : printf("%f | ", matrix[i][j]);
     }
-    printf("  ]\n");
-    printf("\n");
   }
+  printf("\n");
 }
-
 
 int* rowsForThread(int rows, int threads_num){
 
@@ -62,8 +60,10 @@ int* rowsForThread(int rows, int threads_num){
 void* mulRowsCols(void* arguments){
 
   thread_param_t *param = arguments;
+  #ifdef DEBUG
   printf("\n\n%d è il thread che sta eseguendo la mulrowcols\n\n", (int)pthread_self());
   printf("%d --> %d\n\n", param->row_start, param->row_end);
+  #endif
   
   float row_col_result = 0;
   //cicliamo sulla porzione di righe della prima matrice che ci interessa
@@ -79,7 +79,9 @@ void* mulRowsCols(void* arguments){
     }
   }
 
+  #ifdef DEBUG
   printf("%d è il thread che ha finito la mulrowcols\n\n", (int)pthread_self());
+  #endif
   return NULL;
 }
 
@@ -132,13 +134,15 @@ int main(int argc, char const *argv[])
 {
   srand(time(0));
   int rowsA, colsA, rowsB, colsB, rowsC, colsC, threads_num;
-  printf("\n\n🚀Rows of the first matrix : ");
+  
+  // getting user input
+  printf("\n🚀Rows of the first matrix : ");
   scanf("%d", &rowsA);
-  printf("\n\n🚀Columns of the first matrix : ");
+  printf("🚀Columns of the first matrix : ");
   scanf("%d", &colsA);
   
   //il numero di righe della matrice B deve essere uguale al numero di colonne della matrice A
-  printf("\n\n🚀Columns of the second matrix : ");
+  printf("🚀Columns of the second matrix : ");
   rowsB = colsA;
   scanf("%d", &colsB);
 
@@ -147,11 +151,12 @@ int main(int argc, char const *argv[])
   colsC = rowsA;
 
   //chiediamo con quanti thread deve essere calcolata la moltiplicazione
-  printf("\n\n🚀Number of threads : ");
+  printf("\n🚀Number of threads : ");
   scanf("%d", &threads_num);
 
-  //DEBUG
+  #ifdef DEBUG
   printf("Il thread del main è %d", (int)pthread_self());
+  #endif
 
   //creaiamo le matrici
   float **matrixA = createMatrix(rowsA,colsA);
@@ -175,21 +180,17 @@ int main(int argc, char const *argv[])
   time_spent2 += (double)(end2 - begin2) / CLOCKS_PER_SEC;
 
   //stampa dei risultati
+  if(colsA<=10 && colsB<=10 && colsC<=10){
+    printf("✅ MATRIX A\n");
+    printMatrix(matrixA, rowsA, colsA);
+    printf("✅ MATRIX B\n");
+    printMatrix(matrixB, rowsB, colsB);
+    printf("✅ MATRIX AB\n");
+    printMatrix(matrixAB, rowsA, colsB);
+  } else printf("ℹ️ The matrix is too big to print\n");
   
-  printf("\n\n✅ MATRIX A");
-  printf("\n\n\n");
-  printMatrix(matrixA, rowsA, colsA);
-  printf("\n\n✅ MATRIX B");
-  printf("\n\n\n");
-  printMatrix(matrixB, rowsB, colsB);
-  printf("\n\n\n");
-  printf("\n\n✅ MATRIX AB");
-  printf("\n\n\n");
-  printMatrix(matrixAB, rowsA, colsB);
-  
-  printf("\n\n\n");
-  printf("Matrices calulated with threads : %f\n\n", time_spent);
-  printf("Matrices calulated without threads : %f\n\n", time_spent2);
+  printf("Matrices calulated with threads : %f\n", time_spent);
+  printf("Matrices calulated without threads : %f\n", time_spent2);
 
   return 0;
 }
