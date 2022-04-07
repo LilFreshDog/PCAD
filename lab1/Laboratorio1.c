@@ -26,7 +26,7 @@ float** createMatrix(int rows, int cols){
   //fill the matrix with random values
   for(int i = 0;i<rows;i++) {
     for(int j = 0;j<cols;j++) {
-      matrix[i][j] = (float)(rand()%100);
+      matrix[i][j] = (float)rand()/(float)(RAND_MAX/10.0);
     }
   }
 
@@ -62,6 +62,8 @@ int* rowsForThread(int rows, int threads_num){
 void* mulRowsCols(void* arguments){
 
   thread_param_t *param = arguments;
+  printf("\n%d -> %d\n", param->row_start, param->row_end);
+
   float row_col_result = 0;
   //cicliamo sulla porzione di righe della prima matrice che ci interessa
   for(int i = param->row_start; i < param->row_end; i++){
@@ -76,6 +78,7 @@ void* mulRowsCols(void* arguments){
     }
   }
 
+  printf("rowsforcols ends");
   return NULL;
 }
 
@@ -86,6 +89,7 @@ float** mulMatrices(float** matrix1, float** matrix2, int rows1, int cols1, int 
   float** matrix3 = (float**) malloc(rows1 * sizeof(float*));
   for(int i = 0;i<rows1;i++) {
     matrix3[i] = (float*) malloc(cols2 * sizeof(float));
+    memset(matrix3[i],0,cols2 * sizeof(float));
   }
 
   //get the number of rows that every thread must handle
@@ -99,7 +103,16 @@ float** mulMatrices(float** matrix1, float** matrix2, int rows1, int cols1, int 
   }
 
   //making them start
-  thread_param_t param = {matrix1, rows1, cols1, matrix2, cols2, matrix3, 0, 0};
+  thread_param_t param;
+  (&param)->matrixA = matrix1; 
+  (&param)->rowsA = rows1;
+  (&param)->colsA = cols1;
+  (&param)->matrixB = matrix2;
+  (&param)->colsB = cols2;
+  (&param)->matrixAB = matrix3;
+  (&param)->row_start = 0;
+  (&param)->row_end = 0;
+
   for (int i = 0; i < threads_num; i++){
     (&param)->row_end += rows_for_threads[i];
     pthread_create(&my_threads[i],NULL,mulRowsCols, &param);
@@ -158,7 +171,7 @@ int main(int argc, char const *argv[])
   time_spent2 += (double)(end2 - begin2) / CLOCKS_PER_SEC;
 
   //stampa dei risultati
-  /*
+
   printf("\n\n✅ MATRIX A");
   printf("\n\n\n");
   printMatrix(matrixA, rowsA, colsA);
@@ -166,7 +179,6 @@ int main(int argc, char const *argv[])
   printf("\n\n\n");
   printMatrix(matrixB, rowsB, colsB);
   printf("\n\n\n");
-  */  
   printf("\n\n✅ MATRIX AB");
   printf("\n\n\n");
   printMatrix(matrixAB, rowsA, colsB);
