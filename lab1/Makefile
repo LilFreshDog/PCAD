@@ -1,10 +1,12 @@
-main: main.o
-	gcc main.o -o main -lpthread
+main: Laboratorio1.c
+	$(CC) Laboratorio1.c -o main -lpthread
 
-main.o: Laboratorio1.c
-	gcc -c Laboratorio1.c -o main.o
+debug: Laboratorio1.c
+	$(CC) Laboratorio1.c -o debug -lpthread -DDEBUG
+
+all: main debug
 
 clean:
-	rm -f main main.o
+	rm -f main debug main.o
 
 .PHONY: clean
