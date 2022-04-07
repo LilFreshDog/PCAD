@@ -62,8 +62,9 @@ int* rowsForThread(int rows, int threads_num){
 void* mulRowsCols(void* arguments){
 
   thread_param_t *param = arguments;
-  printf("\n%d -> %d\n", param->row_start, param->row_end);
-
+  printf("\n\n%d è il thread che sta eseguendo la mulrowcols\n\n", (int)pthread_self());
+  printf("%d --> %d\n\n", param->row_start, param->row_end);
+  
   float row_col_result = 0;
   //cicliamo sulla porzione di righe della prima matrice che ci interessa
   for(int i = param->row_start; i < param->row_end; i++){
@@ -78,7 +79,7 @@ void* mulRowsCols(void* arguments){
     }
   }
 
-  printf("rowsforcols ends");
+  printf("%d è il thread che ha finito la mulrowcols\n\n", (int)pthread_self());
   return NULL;
 }
 
@@ -89,7 +90,7 @@ float** mulMatrices(float** matrix1, float** matrix2, int rows1, int cols1, int 
   float** matrix3 = (float**) malloc(rows1 * sizeof(float*));
   for(int i = 0;i<rows1;i++) {
     matrix3[i] = (float*) malloc(cols2 * sizeof(float));
-    memset(matrix3[i],0,cols2 * sizeof(float));
+    memset(matrix3[i], 0, cols2*sizeof(float));
   }
 
   //get the number of rows that every thread must handle
@@ -102,21 +103,21 @@ float** mulMatrices(float** matrix1, float** matrix2, int rows1, int cols1, int 
     my_threads[i] = my_thread;
   }
 
-  //making them start
-  thread_param_t param;
-  (&param)->matrixA = matrix1; 
-  (&param)->rowsA = rows1;
-  (&param)->colsA = cols1;
-  (&param)->matrixB = matrix2;
-  (&param)->colsB = cols2;
-  (&param)->matrixAB = matrix3;
-  (&param)->row_start = 0;
-  (&param)->row_end = 0;
+  //creating an array of parameters
 
+  thread_param_t * my_args = (thread_param_t*) malloc(threads_num * sizeof(thread_param_t));
+  int starting_row = 0;
+  int ending_row = 0;
   for (int i = 0; i < threads_num; i++){
-    (&param)->row_end += rows_for_threads[i];
-    pthread_create(&my_threads[i],NULL,mulRowsCols, &param);
-    (&param)->row_start += rows_for_threads[i];
+    ending_row += rows_for_threads[i];
+    thread_param_t my_arg = {matrix1, rows1, cols1, matrix2, cols2, matrix3, starting_row, ending_row};
+    my_args[i] = my_arg;
+    starting_row = ending_row;
+  }
+
+  //starting the threads
+  for (int i = 0; i < threads_num; i++){
+    pthread_create(&my_threads[i],NULL,mulRowsCols, &my_args[i]);
   }
 
   //waiting for all of them to finish
@@ -149,6 +150,9 @@ int main(int argc, char const *argv[])
   printf("\n\n🚀Number of threads : ");
   scanf("%d", &threads_num);
 
+  //DEBUG
+  printf("Il thread del main è %d", (int)pthread_self());
+
   //creaiamo le matrici
   float **matrixA = createMatrix(rowsA,colsA);
   float **matrixB = createMatrix(rowsB,colsB);
@@ -171,7 +175,7 @@ int main(int argc, char const *argv[])
   time_spent2 += (double)(end2 - begin2) / CLOCKS_PER_SEC;
 
   //stampa dei risultati
-
+  
   printf("\n\n✅ MATRIX A");
   printf("\n\n\n");
   printMatrix(matrixA, rowsA, colsA);
