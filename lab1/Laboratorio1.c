@@ -165,22 +165,6 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
     pthread_create(&my_threads[i],NULL,mulRowsCols, &my_args[i]);
   }
 
-  // // freeing the memory
-  // if (matrix1 != NULL && matrix2 != NULL)
-  // {
-  //   // matrix1
-  //   for (int i=0; i<rows1; i++) {
-  //     free(matrix1[i]);
-  //   }
-  //   free(matrix1);
-  //   // matrix2
-  //   for (int i=0; i<rows2; i++) {
-  //     free(matrix2[i]);
-  //   }
-  //   free(matrix2);
-  // }
-
-
   for (int i = 0; i < threads_num; i++){
     pthread_create(&my_threads[i],NULL,mulRowsCols, &my_args2[i]);
   }
