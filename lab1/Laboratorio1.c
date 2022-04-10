@@ -110,14 +110,13 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
 
   pthread_barrier_init(&barrier, NULL, threads_num);
 
-  printf("\n\npippo --------------------------------------------------------------------------\n\n");
   //genero la matrice finale
   float** final_matrix = (float**) malloc(rows3 * sizeof(float*));
   for(int i = 0;i<rows3;i++) {
     final_matrix[i] = (float*) malloc(cols2 * sizeof(float));
     memset(final_matrix[i], 0, cols2*sizeof(float));
   }
-    printf("\n\npluto --------------------------------------------------------------------------\n\n");
+
   //genero la matrice AB
   float** matrix12 = (float**) malloc(rows1 * sizeof(float*));
   for(int i = 0;i<rows1;i++) {
@@ -125,12 +124,11 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
     memset(matrix12[i], 0, cols2*sizeof(float));
   }
 
-  printf("\n\npaperino --------------------------------------------------------------------------\n\n");
   //get the number of rows that every thread must handle
   int *rows_for_threads = rowsForThread(rows1, threads_num);
   int * rows_for_threads2 = rowsForThread(rows3, threads_num);
 
-  printf("\n\nassussa --------------------------------------------------------------------------\n\n");
+
   //creating an array of threads
   pthread_t * my_threads = (pthread_t*) malloc(threads_num * sizeof(pthread_t));
   for (int i = 0; i < threads_num; i++){
@@ -138,7 +136,7 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
     my_threads[i] = my_thread;
   }
 
-  printf("\n\ncancioshno --------------------------------------------------------------------------\n\n");
+
   //creating an array of parameters for A*B
   thread_param_t * my_args = (thread_param_t*) malloc(threads_num * sizeof(thread_param_t));
   int starting_row = 0;
@@ -150,7 +148,7 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
     starting_row = ending_row;
   }
 
-  printf("\n\naieie --------------------------------------------------------------------------\n\n");
+  
   // creating an array of parameters for C*AB
   thread_param_t * my_args2 = (thread_param_t*) malloc(threads_num * sizeof(thread_param_t));
   int starting_row2 = 0;
@@ -162,32 +160,23 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
     starting_row2 = ending_row2;
   }
 
-  printf("\n\nla perla nera --------------------------------------------------------------------------\n\n");
-  //starting the threads
   for (int i = 0; i < threads_num; i++){
     pthread_create(&my_threads[i],NULL,mulRowsCols, &my_args[i]);
   }
 
-  printf("\n\nallolla --------------------------------------------------------------------------\n\n");
-  
-  // barriera dei thread
-  pthread_barrier_wait(&barrier);
-  printf("\n\ntakashi castle --------------------------------------------------------------------------\n\n");
-  pthread_barrier_destroy(&barrier);
-
-  // eseguo seconda moltiplicazione
-  //------------------------------------------- SIAMO ARRIVATI QUI ----------------------------------------------------------/
-
   for (int i = 0; i < threads_num; i++){
     pthread_create(&my_threads[i],NULL,mulRowsCols, &my_args2[i]);
   }
+	
 
   //waiting for all of them to finish
   for(int i = 0; i < threads_num; i++){
     pthread_join(my_threads[i], NULL);
   }
-
-  return final_matrix;
+	// barriera dei thread
+  pthread_barrier_destroy(&barrier);
+  
+	return final_matrix;
 }
 
 
@@ -258,7 +247,7 @@ int main(int argc, char const *argv[])
 
   //calcoliamo senza i threads
   clock_t begin2 = clock();
-//  float **matrixAB_nothreads = mulMatrices(matrixA, matrixB, rowsA, colsA, rowsB, colsB, 1);
+ float **matrixABC_nothreads = mulMatrices(matrixA, matrixB, matrixC, rowsA, colsA, rowsB, colsB, rowsC, colsC, 1);
   clock_t end2 = clock();
   double time_spent2 = (double)(end2 - begin2) / CLOCKS_PER_SEC;
 
@@ -268,8 +257,10 @@ int main(int argc, char const *argv[])
     printMatrix(matrixA, rowsA, colsA);
     printf("✅ MATRIX B\n");
     printMatrix(matrixB, rowsB, colsB);
-    printf("✅ MATRIX AB\n");
-  //  printMatrix(matrixAB, rowsA, colsB);
+		printf("✅ MATRIX C\n");
+    printMatrix(matrixC, rowsC, colsC);
+    printf("✅ MATRIX ABC\n");
+    printMatrix(matrixABC, rowsA, colsB);
   } else printf("ℹ️ The matrix is too big to print\n");
   
   printf("Matrices calulated with threads : %f\n", time_spent);
