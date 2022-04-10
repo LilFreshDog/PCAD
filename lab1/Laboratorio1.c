@@ -33,9 +33,8 @@ typedef struct {
 } thread_param_t;
 
 int COUNT = 0;
-pthread_mutex_t mutex_count = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t condition_mutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_cond_t wait_condition = PTHREAD_COND_INITIALIZER;
+pthread_mutex_t COUNT_MUTEX = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t CONDITION_VARIABLE = PTHREAD_COND_INITIALIZER;
 
 
 float** createMatrix(int rows, int cols){
@@ -163,9 +162,19 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
   }
 
   // barriera dei thread
-  pthread_mutex_lock(&COUNT);
+  pthread_mutex_lock(&COUNT_MUTEX); // inizio sezione critica
   COUNT--;
-  if( COUNT == 0) //------------------------------------------- SIAMO ARRIVATI QUI ----------------------------------------------------------/
+  if( COUNT == 0) 
+  {
+    pthread_cond_broadcast(&CONDITION_VARIABLE); // segnala la ripartenza a tutti i thread in attesa
+    COUNT = threads_num; // resetta il contatore
+  } else {
+    pthread_cond_wait(&CONDITION_VARIABLE, &COUNT_MUTEX); // aspetta che tutti i thread arrivino alla barriera
+  }
+  pthread_mutex_unlock(&COUNT_MUTEX); // fine sezione critica
+
+  // eseguo seconda moltiplicazione
+  //------------------------------------------- SIAMO ARRIVATI QUI ----------------------------------------------------------/
 
   //waiting for all of them to finish
   for(int i = 0; i < threads_num; i++){
