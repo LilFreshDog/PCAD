@@ -134,25 +134,51 @@ int main(int argc, char const *argv[])
 {
   srand(time(0));
   int rowsA, colsA, rowsB, colsB, rowsC, colsC, threads_num;
-  
-  // getting user input
-  printf("\n🚀Rows of the first matrix : ");
-  scanf("%d", &rowsA);
-  printf("🚀Columns of the first matrix : ");
-  scanf("%d", &colsA);
-  
-  //il numero di righe della matrice B deve essere uguale al numero di colonne della matrice A
-  printf("🚀Columns of the second matrix : ");
-  rowsB = colsA;
-  scanf("%d", &colsB);
 
-  //ricaviamo il numero di righe e di colonne per la matrice C
-  rowsC = colsB;
-  colsC = rowsA;
+  if (argc == 5)
+  {
+#ifdef DEBUG
+    printf("\n> Running in cli mode <\n");
+    printf("  - M = %d\n", atoi(argv[1]));
+    printf("  - N = %d\n", atoi(argv[2]));
+    printf("  - P = %d\n", atoi(argv[3]));
+    printf("  - Threads = %d\n\n", atoi(argv[4]));
+#endif
+    rowsA = atoi(argv[1]);
+    colsA = atoi(argv[2]);
+    colsB = atoi(argv[3]);
+    threads_num = atoi(argv[4]);
 
-  //chiediamo con quanti thread deve essere calcolata la moltiplicazione
-  printf("\n🚀Number of threads : ");
-  scanf("%d", &threads_num);
+    rowsB = colsA;
+    rowsC = colsB;
+    colsC = rowsA;
+  } else if (argc == 1)
+  {
+    printf("you can also call the program with the following parameters:\n");
+    printf("- M: rows of A and columns of C\n");
+    printf("- N: columns of A and rows of B\n");
+    printf("- P: columns of B and rows of C\n");
+    printf("- T: number of threads\n");
+
+    // richiedo dati input
+    printf("\n🚀 Rows of the first matrix : ");
+    scanf("%d", &rowsA);
+    printf("🚀 Columns of the first matrix : ");
+    scanf("%d", &colsA);
+    
+    //il numero di righe della matrice B deve essere uguale al numero di colonne della matrice A
+    printf("🚀 Columns of the second matrix : ");
+    rowsB = colsA;
+    scanf("%d", &colsB);
+
+    //ricaviamo il numero di righe e di colonne per la matrice C
+    rowsC = colsB;
+    colsC = rowsA;
+
+    //chiediamo con quanti thread deve essere calcolata la moltiplicazione
+    printf("\n🚀 Number of threads : ");
+    scanf("%d", &threads_num);
+  } else return 1;
 
   #ifdef DEBUG
   printf("Il thread del main è %d", (int)pthread_self());
@@ -164,20 +190,22 @@ int main(int argc, char const *argv[])
   float **matrixC = createMatrix(rowsC,colsC);
   
   //calcoliamo con i threads
-  double time_spent = 0.0;
+  //double time_spent = 0.0;
   clock_t begin = clock();
   float **matrixAB = mulMatrices(matrixA, matrixB, rowsA, colsA, rowsB, colsB, threads_num);
+  float **matrixCAB = mulMatrices(matrixC, matrixAB, rowsC, colsC, rowsA, colsB, threads_num);
   clock_t end = clock();
-  time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
- 
+  //time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
+  double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+
   //calcoliamo senza i threads
-  double time_spent2 = 0.0;
-  float **matrixAB2 = createMatrix(rowsA,colsB);
-  thread_param_t param = {matrixA, rowsA, colsA, matrixB, colsB, matrixAB2, 0, rowsA};
+  //Rdouble time_spent2 = 0.0;
   clock_t begin2 = clock();
-  mulRowsCols(&param);
+  float **matrixAB_nothreads = mulMatrices(matrixA, matrixB, rowsA, colsA, rowsB, colsB, 1);
+  float **matrixCAB_nothreads = mulMatrices(matrixC, matrixAB_nothreads, rowsC, colsC, rowsA, colsB, 1);
   clock_t end2 = clock();
-  time_spent2 += (double)(end2 - begin2) / CLOCKS_PER_SEC;
+  //Rtime_spent2 += (double)(end2 - begin2) / CLOCKS_PER_SEC;
+  double time_spent2 = (double)(end2 - begin2) / CLOCKS_PER_SEC;
 
   //stampa dei risultati
   if(colsA<=10 && colsB<=10 && colsC<=10){
