@@ -1,3 +1,18 @@
+/**
+ * @file Laboratorio1.c
+ * @author Milo Galli (4793560@studenti.unige.it)
+ * @author Samuele Pignone (4838155@studenti.unige.it)
+ * @author Giorgio Rengucci (4483986@studenti.unige.it)
+ * @brief Matrix multiplication using pthread.
+ *        Computes C[p][m] * A[m][n] * B[n][p]
+ *        Usage "make all" -> "./main <m> <n> <p> <thread_number>" 
+ *        Ouputs computation times
+ * @version 1
+ * @date 2022-04-10
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
