@@ -165,6 +165,22 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
     pthread_create(&my_threads[i],NULL,mulRowsCols, &my_args[i]);
   }
 
+  // // freeing the memory
+  // if (matrix1 != NULL && matrix2 != NULL)
+  // {
+  //   // matrix1
+  //   for (int i=0; i<rows1; i++) {
+  //     free(matrix1[i]);
+  //   }
+  //   free(matrix1);
+  //   // matrix2
+  //   for (int i=0; i<rows2; i++) {
+  //     free(matrix2[i]);
+  //   }
+  //   free(matrix2);
+  // }
+
+
   for (int i = 0; i < threads_num; i++){
     pthread_create(&my_threads[i],NULL,mulRowsCols, &my_args2[i]);
   }
@@ -264,7 +280,7 @@ int main(int argc, char const *argv[])
     printMatrix(matrixABC, rowsA, colsB);
   } else printf("ℹ️ The matrix is too big to print\n");
   
-  printf("Matrices calulated with threads : %f\n", time_spent);
+  printf("Matrices calulated with threads    : %f\n", time_spent);
   printf("Matrices calulated without threads : %f\n", time_spent2);
 
   return 0;
