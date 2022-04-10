@@ -14,6 +14,7 @@
  *
  */
 
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -32,10 +33,7 @@ typedef struct {
   int row_end;
 } thread_param_t;
 
-int COUNT = 0;
-pthread_mutex_t COUNT_MUTEX = PTHREAD_MUTEX_INITIALIZER;
-pthread_cond_t CONDITION_VARIABLE = PTHREAD_COND_INITIALIZER;
-
+pthread_barrier_t barrier;
 
 float** createMatrix(int rows, int cols){
   //create the matrix
@@ -103,19 +101,23 @@ void* mulRowsCols(void* arguments){
   #ifdef DEBUG
   printf("%d è il thread che ha finito la mulrowcols\n\n", (int)pthread_self());
   #endif
+  pthread_barrier_wait(&barrier);
   return NULL;
 }
 
 
 float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1, int cols1, int rows2, int cols2, int rows3, int cols3, int threads_num){  
 
+  pthread_barrier_init(&barrier, NULL, threads_num);
+
+  printf("\n\npippo --------------------------------------------------------------------------\n\n");
   //genero la matrice finale
   float** final_matrix = (float**) malloc(rows3 * sizeof(float*));
-  for(int i = 0;i<rows1;i++) {
+  for(int i = 0;i<rows3;i++) {
     final_matrix[i] = (float*) malloc(cols2 * sizeof(float));
     memset(final_matrix[i], 0, cols2*sizeof(float));
   }
-
+    printf("\n\npluto --------------------------------------------------------------------------\n\n");
   //genero la matrice AB
   float** matrix12 = (float**) malloc(rows1 * sizeof(float*));
   for(int i = 0;i<rows1;i++) {
@@ -123,10 +125,12 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
     memset(matrix12[i], 0, cols2*sizeof(float));
   }
 
+  printf("\n\npaperino --------------------------------------------------------------------------\n\n");
   //get the number of rows that every thread must handle
   int *rows_for_threads = rowsForThread(rows1, threads_num);
   int * rows_for_threads2 = rowsForThread(rows3, threads_num);
 
+  printf("\n\nassussa --------------------------------------------------------------------------\n\n");
   //creating an array of threads
   pthread_t * my_threads = (pthread_t*) malloc(threads_num * sizeof(pthread_t));
   for (int i = 0; i < threads_num; i++){
@@ -134,6 +138,7 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
     my_threads[i] = my_thread;
   }
 
+  printf("\n\ncancioshno --------------------------------------------------------------------------\n\n");
   //creating an array of parameters for A*B
   thread_param_t * my_args = (thread_param_t*) malloc(threads_num * sizeof(thread_param_t));
   int starting_row = 0;
@@ -145,6 +150,7 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
     starting_row = ending_row;
   }
 
+  printf("\n\naieie --------------------------------------------------------------------------\n\n");
   // creating an array of parameters for C*AB
   thread_param_t * my_args2 = (thread_param_t*) malloc(threads_num * sizeof(thread_param_t));
   int starting_row2 = 0;
@@ -156,25 +162,25 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
     starting_row2 = ending_row2;
   }
 
+  printf("\n\nla perla nera --------------------------------------------------------------------------\n\n");
   //starting the threads
   for (int i = 0; i < threads_num; i++){
     pthread_create(&my_threads[i],NULL,mulRowsCols, &my_args[i]);
   }
 
+  printf("\n\nallolla --------------------------------------------------------------------------\n\n");
+  
   // barriera dei thread
-  pthread_mutex_lock(&COUNT_MUTEX); // inizio sezione critica
-  COUNT--;
-  if( COUNT == 0) 
-  {
-    pthread_cond_broadcast(&CONDITION_VARIABLE); // segnala la ripartenza a tutti i thread in attesa
-    COUNT = threads_num; // resetta il contatore
-  } else {
-    pthread_cond_wait(&CONDITION_VARIABLE, &COUNT_MUTEX); // aspetta che tutti i thread arrivino alla barriera
-  }
-  pthread_mutex_unlock(&COUNT_MUTEX); // fine sezione critica
+  pthread_barrier_wait(&barrier);
+  printf("\n\ntakashi castle --------------------------------------------------------------------------\n\n");
+  pthread_barrier_destroy(&barrier);
 
   // eseguo seconda moltiplicazione
   //------------------------------------------- SIAMO ARRIVATI QUI ----------------------------------------------------------/
+
+  for (int i = 0; i < threads_num; i++){
+    pthread_create(&my_threads[i],NULL,mulRowsCols, &my_args2[i]);
+  }
 
   //waiting for all of them to finish
   for(int i = 0; i < threads_num; i++){
@@ -183,7 +189,6 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
 
   return final_matrix;
 }
-
 
 
 int main(int argc, char const *argv[])
@@ -236,9 +241,6 @@ int main(int argc, char const *argv[])
     scanf("%d", &threads_num);
   } else return 1;
 
-  //aggiorniamo il contatore dei thread
-  COUNT = threads_num;
-
   #ifdef DEBUG
   printf("Il thread del main è %d", (int)pthread_self());
   #endif
@@ -249,20 +251,15 @@ int main(int argc, char const *argv[])
   float **matrixC = createMatrix(rowsC,colsC);
   
   //calcoliamo con i threads
-  //double time_spent = 0.0;
   clock_t begin = clock();
   float **matrixABC = mulMatrices(matrixA, matrixB, matrixC, rowsA, colsA, rowsB, colsB, rowsC, colsC, threads_num);
   clock_t end = clock();
-  //time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
   double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 
   //calcoliamo senza i threads
-  //Rdouble time_spent2 = 0.0;
   clock_t begin2 = clock();
 //  float **matrixAB_nothreads = mulMatrices(matrixA, matrixB, rowsA, colsA, rowsB, colsB, 1);
-
   clock_t end2 = clock();
-  //Rtime_spent2 += (double)(end2 - begin2) / CLOCKS_PER_SEC;
   double time_spent2 = (double)(end2 - begin2) / CLOCKS_PER_SEC;
 
   //stampa dei risultati
