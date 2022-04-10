@@ -20,7 +20,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <time.h>
-#include <pthread.h>
+//#include <pthread.h>
+#include "pthread_barrier.h"
 
 typedef struct {
   float **matrixA;
