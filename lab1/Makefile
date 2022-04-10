@@ -1,8 +1,8 @@
 main: Laboratorio1.c
-	$(CC) Laboratorio1.c -o main -lpthread
+	$(CC) Laboratorio1.c -o main -lpthread -O0
 
 debug: Laboratorio1.c
-	$(CC) Laboratorio1.c -o debug -lpthread -DDEBUG
+	$(CC) Laboratorio1.c -o debug -lpthread -DDEBUG -O0
 
 all: main debug
 
