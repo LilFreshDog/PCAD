@@ -54,3 +54,6 @@ dkms.conf
 # Executables
 main
 debug
+
+# Zip
+*.zip
