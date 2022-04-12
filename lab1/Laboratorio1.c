@@ -53,6 +53,29 @@ float** createMatrix(int rows, int cols){
   return matrix;
 }
 
+float** createMatrixOfZeros(int rows, int cols){
+  //create the matrix
+  float** matrix = (float**) malloc(rows * sizeof(float*));
+  for(int i = 0;i<rows;i++) {
+    matrix[i] = (float*) malloc(cols * sizeof(float));
+    memset(matrix[i], 0, cols*sizeof(float));
+  }
+  return matrix;
+}
+
+thread_param_t* createParameters(int* rows_for_threads, float** matrixA, int rowsA, int colsA, float** matrixB, int colsB, float** matrixAB, int threads_num ){
+  thread_param_t * my_args = (thread_param_t*) malloc(threads_num * sizeof(thread_param_t));
+  int starting_row = 0;
+  int ending_row = 0;
+  for (int i = 0; i < threads_num; i++){
+    ending_row += rows_for_threads[i];
+    thread_param_t my_arg = {matrixA, rowsA, colsA, matrixB, colsB, matrixAB, starting_row, ending_row};
+    my_args[i] = my_arg;
+    starting_row = ending_row;
+  } 
+  return my_args;
+}
+
 void printMatrix(float **matrix, int rows, int cols) {
   for (int i = 0; i < rows; i++) {
     printf("[ ");
@@ -86,12 +109,12 @@ void* mulRowsCols(void* arguments){
   #endif
   
   float row_col_result = 0;
-  //cicliamo sulla porzione di righe della prima matrice che ci interessa
+  //iterating on the rows of the first column
   for(int i = param->row_start; i < param->row_end; i++){
-    //cicliamo per il numero di colonne della seconda matrice perchè dobbiamo moltiplicare la singola riga per tutte le colonne di B
+    //iterating over all the second matrix's columns
     for(int k = 0; k < param->colsB; k++ ){
       row_col_result = 0;
-      //cicliamo su tutti gli elementi della riga attuale cos' da ottenere il valore da mettere nella matrice AB
+      //iterating over all the elements of the current row
       for (int j = 0; j < param->colsA; j++){
         row_col_result += param->matrixA[i][j] * param->matrixB[j][k]; 
       }
@@ -110,19 +133,10 @@ float** mulMatrices(float** matrixA, float** matrixB, float** matrixC, int rowsA
 
   pthread_barrier_init(&barrier, NULL, threads_num);
 
-  //genero la matrice finale
-  float** matrixABC = (float**) malloc(rowsC * sizeof(float*));
-  for(int i = 0;i<rowsC;i++) {
-    matrixABC[i] = (float*) malloc(colsB * sizeof(float));
-    memset(matrixABC[i], 0, colsB*sizeof(float));
-  }
-
-  //genero la matrice AB
-  float** matrixAB = (float**) malloc(rowsA * sizeof(float*));
-  for(int i = 0;i<rowsA;i++) {
-    matrixAB[i] = (float*) malloc(colsB * sizeof(float));
-    memset(matrixAB[i], 0, colsB*sizeof(float));
-  }
+  //creating the final matrix
+  float** matrixABC = createMatrixOfZeros(rowsC,colsB);
+  //creating the first product matrix
+  float** matrixAB = createMatrixOfZeros(rowsA, colsB);
 
   //get the number of rows that every thread must handle
   int *rows_for_threads = rowsForThread(rowsA, threads_num);
@@ -136,32 +150,13 @@ float** mulMatrices(float** matrixA, float** matrixB, float** matrixC, int rowsA
   }
 
   //creating an array of parameters for A*B
-  thread_param_t * my_args = (thread_param_t*) malloc(threads_num * sizeof(thread_param_t));
-  int starting_row = 0;
-  int ending_row = 0;
-  for (int i = 0; i < threads_num; i++){
-    ending_row += rows_for_threads[i];
-    thread_param_t my_arg = {matrixA, rowsA, colsA, matrixB, colsB, matrixAB, starting_row, ending_row};
-    my_args[i] = my_arg;
-    starting_row = ending_row;
-  }
- 
+  thread_param_t * my_args = createParameters(rows_for_threads, matrixA, rowsA, colsA, matrixB, colsB, matrixAB, threads_num);
   // creating an array of parameters for C*AB
-  thread_param_t * my_args2 = (thread_param_t*) malloc(threads_num * sizeof(thread_param_t));
-  int starting_row2 = 0;
-  int ending_row2 = 0;
-  for (int i = 0; i < threads_num; i++){
-    ending_row2 += rows_for_threads2[i];
-    thread_param_t my_arg2 = {matrixC, rowsC, colsC, matrixAB, colsB, matrixABC, starting_row2, ending_row2};
-    my_args2[i] = my_arg2;
-    starting_row2 = ending_row2;
-  }
-
+  thread_param_t * my_args2 = createParameters(rows_for_threads2, matrixC, rowsC,colsC, matrixAB, colsB, matrixABC, threads_num);
   //doing the multiplication
   for (int i = 0; i < threads_num; i++){
     pthread_create(&my_threads[i],NULL,mulRowsCols, &my_args[i]);
   }
-
   for (int i = 0; i < threads_num; i++){
     pthread_create(&my_threads[i],NULL,mulRowsCols, &my_args2[i]);
   }
@@ -243,7 +238,7 @@ int main(int argc, char const *argv[])
 
   //calcoliamo senza i threads
   clock_t begin2 = clock();
- float **matrixABC_nothreads = mulMatrices(matrixA, matrixB, matrixC, rowsA, colsA, rowsB, colsB, rowsC, colsC, 1);
+  float **matrixABC_nothreads = mulMatrices(matrixA, matrixB, matrixC, rowsA, colsA, rowsB, colsB, rowsC, colsC, 1);
   clock_t end2 = clock();
   double time_spent2 = (double)(end2 - begin2) / CLOCKS_PER_SEC;
 
