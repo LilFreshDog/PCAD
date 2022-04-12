@@ -106,29 +106,27 @@ void* mulRowsCols(void* arguments){
   return NULL;
 }
 
-
-float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1, int cols1, int rows2, int cols2, int rows3, int cols3, int threads_num){  
+float** mulMatrices(float** matrixA, float** matrixB, float** matrixC, int rowsA, int colsA, int rowsB, int colsB, int rowsC, int colsC, int threads_num){  
 
   pthread_barrier_init(&barrier, NULL, threads_num);
 
   //genero la matrice finale
-  float** final_matrix = (float**) malloc(rows3 * sizeof(float*));
-  for(int i = 0;i<rows3;i++) {
-    final_matrix[i] = (float*) malloc(cols2 * sizeof(float));
-    memset(final_matrix[i], 0, cols2*sizeof(float));
+  float** matrixABC = (float**) malloc(rowsC * sizeof(float*));
+  for(int i = 0;i<rowsC;i++) {
+    matrixABC[i] = (float*) malloc(colsB * sizeof(float));
+    memset(matrixABC[i], 0, colsB*sizeof(float));
   }
 
   //genero la matrice AB
-  float** matrix12 = (float**) malloc(rows1 * sizeof(float*));
-  for(int i = 0;i<rows1;i++) {
-    matrix12[i] = (float*) malloc(cols2 * sizeof(float));
-    memset(matrix12[i], 0, cols2*sizeof(float));
+  float** matrixAB = (float**) malloc(rowsA * sizeof(float*));
+  for(int i = 0;i<rowsA;i++) {
+    matrixAB[i] = (float*) malloc(colsB * sizeof(float));
+    memset(matrixAB[i], 0, colsB*sizeof(float));
   }
 
   //get the number of rows that every thread must handle
-  int *rows_for_threads = rowsForThread(rows1, threads_num);
-  int * rows_for_threads2 = rowsForThread(rows3, threads_num);
-
+  int *rows_for_threads = rowsForThread(rowsA, threads_num);
+  int * rows_for_threads2 = rowsForThread(rowsC, threads_num);
 
   //creating an array of threads
   pthread_t * my_threads = (pthread_t*) malloc(threads_num * sizeof(pthread_t));
@@ -137,30 +135,29 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
     my_threads[i] = my_thread;
   }
 
-
   //creating an array of parameters for A*B
   thread_param_t * my_args = (thread_param_t*) malloc(threads_num * sizeof(thread_param_t));
   int starting_row = 0;
   int ending_row = 0;
   for (int i = 0; i < threads_num; i++){
     ending_row += rows_for_threads[i];
-    thread_param_t my_arg = {matrix1, rows1, cols1, matrix2, cols2, matrix12, starting_row, ending_row};
+    thread_param_t my_arg = {matrixA, rowsA, colsA, matrixB, colsB, matrixAB, starting_row, ending_row};
     my_args[i] = my_arg;
     starting_row = ending_row;
   }
-
-  
+ 
   // creating an array of parameters for C*AB
   thread_param_t * my_args2 = (thread_param_t*) malloc(threads_num * sizeof(thread_param_t));
   int starting_row2 = 0;
   int ending_row2 = 0;
   for (int i = 0; i < threads_num; i++){
     ending_row2 += rows_for_threads2[i];
-    thread_param_t my_arg2 = {matrix3, rows3, cols3, matrix12, cols2, final_matrix, starting_row2, ending_row2};
+    thread_param_t my_arg2 = {matrixC, rowsC, colsC, matrixAB, colsB, matrixABC, starting_row2, ending_row2};
     my_args2[i] = my_arg2;
     starting_row2 = ending_row2;
   }
 
+  //doing the multiplication
   for (int i = 0; i < threads_num; i++){
     pthread_create(&my_threads[i],NULL,mulRowsCols, &my_args[i]);
   }
@@ -169,17 +166,15 @@ float** mulMatrices(float** matrix1, float** matrix2, float** matrix3, int rows1
     pthread_create(&my_threads[i],NULL,mulRowsCols, &my_args2[i]);
   }
 	
-
   //waiting for all of them to finish
   for(int i = 0; i < threads_num; i++){
     pthread_join(my_threads[i], NULL);
   }
-	// barriera dei thread
+	//destroying the thread's barrier
   pthread_barrier_destroy(&barrier);
   
-	return final_matrix;
+	return matrixABC;
 }
-
 
 int main(int argc, char const *argv[])
 {
@@ -262,7 +257,7 @@ int main(int argc, char const *argv[])
     printMatrix(matrixC, rowsC, colsC);
     printf("✅ MATRIX ABC\n");
     printMatrix(matrixABC, rowsA, colsB);
-  } else printf("ℹ️ The matrix is too big to print\n");
+  } else printf("ℹ️ The matrix is too big to be printed\n");
   
   printf("Matrices calulated with threads    : %f\n", time_spent);
   printf("Matrices calulated without threads : %f\n", time_spent2);
