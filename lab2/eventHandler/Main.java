@@ -1,3 +1,4 @@
+package lab2.eventHandler;
 /**
  * LABORATORIO 2 - Calcolo dei numeri primi tramite metodo di crivello concorrente
  * 
@@ -7,3 +8,9 @@
  * @author Giorgio Rengucci (4483986@studenti.unige.it)
  *
  */
+
+public class Main {
+  public static void main(String[] args){
+
+  } 
+}
