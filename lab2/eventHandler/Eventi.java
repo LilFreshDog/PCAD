@@ -4,29 +4,38 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class Eventi {
   
-  BlockingQueue<String> Eventi;
+  BlockingQueue<Evento> Eventi;
 
   public Eventi(){
     this.Eventi = new LinkedBlockingDeque<>();
   }
 
-  private void Crea(String Nome, String[] Posti){
-
+  public  void Crea(String Nome, Integer Posti){
+    Evento evento = new Evento(Nome, Posti);
+    Eventi.add(evento);
   }
 
-  private void Aggiungi(String Nome, String[] Posti){
-
+  public void Aggiungi(String Nome, Integer Posti){
+    for(Evento ev : Eventi){
+      if(ev.getNome() == Nome)ev.aggiungiPosti(Posti);
+    }
   }
 
-  private void Prenota(String Nome, String[] Posti){
-
+  //fare controllo se la prenotaPosti ritorna true o false [bisogna gestire il thread che vuole prenotare]
+  public void Prenota(String Nome, Integer Posti){
+    for(Evento ev : Eventi){
+      if(ev.getNome() == Nome)ev.prenotaPosti(Posti);
+    }
   }
 
-  private void ListaEventi(){
-
+  public void ListaEventi(){
+    for(Evento ev : Eventi){
+      System.out.println((ev.getNome().toString()) + " posti disponibili : " + (ev.getPosti().toString()));
+    }
   }
 
-  private void Chiudi(String Nome){
+  // cancellare l'evente e sbloccare i thread che stanno aspettando di prenotare posti
+  public void Chiudi(String Nome){
     
   }
 }
