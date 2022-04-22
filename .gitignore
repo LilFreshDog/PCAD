@@ -57,3 +57,6 @@ debug
 
 # Zip
 *.zip
+
+#MacOS
+.DS_Store
