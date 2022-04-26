@@ -17,11 +17,11 @@ public class Evento {
     return Posti;
   }
 
-  public void aggiungiPosti(Integer postiNuovi){
+  public synchronized void aggiungiPosti(Integer postiNuovi){
     Posti += postiNuovi;
   } 
-
-  public Boolean prenotaPosti(Integer postiPrenotati){
+ 
+  public synchronized Boolean prenotaPosti(Integer postiPrenotati){
     if(Posti < postiPrenotati)return false;
     Posti -= postiPrenotati;
     return true;
