@@ -11,22 +11,28 @@ public class Test {
 
     public Test(){
         this.eventi = new Eventi();
-        this.admin = new Admin(this.eventi.Eventi);
-        this.ut1 = new Utente(this.eventi.Eventi);
-        this.ut2 = new Utente(this.eventi.Eventi);
-        this.ut3 = new Utente(this.eventi.Eventi);
+        this.admin = new Admin(this.eventi);
+        this.ut1 = new Utente(this.eventi);
+        this.ut2 = new Utente(this.eventi);
+        this.ut3 = new Utente(this.eventi);
     }
 
-    public void startTesting() {
-        admin.start();
-        ut1.start();
-        ut2.start();
-        ut3.start();
+    public void startTesting() {    
+        try{
+            admin.start();
+            ut1.start();
+            ut2.start();
+            ut3.start();
 
-        admin.join();
-        ut1.join();
-        ut2.join();
-        ut3.join();
+            ut1.join();
+            ut2.join();
+            ut3.join();
+            admin.join();
+
+            eventi.ListaEventi();
+        }catch(InterruptedException e){
+            System.out.println("Thread error in execution");
+        }
     }
 
 }

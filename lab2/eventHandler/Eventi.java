@@ -19,7 +19,7 @@ public class Eventi {
     Eventi.add(evento);
   }
 
-  public void Aggiungi(String Nome, Integer Posti){
+  public synchronized void Aggiungi(String Nome, Integer Posti){
     for(Evento ev : Eventi){
       if(ev.getNome() == Nome){
         ev.aggiungiPosti(Posti);
@@ -29,7 +29,7 @@ public class Eventi {
   }
 
   //fare controllo se la prenotaPosti ritorna true o false [bisogna gestire il thread che vuole prenotare]
-  public void Prenota(String Nome, Integer Posti){
+  public synchronized void Prenota(String Nome, Integer Posti){
     for(Evento ev : Eventi){
       if(ev.getNome() == Nome){
         while(!ev.prenotaPosti(Posti)){
@@ -58,7 +58,7 @@ public class Eventi {
   }
 
   // cancellare l'evente e sbloccare i thread che stanno aspettando di prenotare posti
-  public void Chiudi(String Nome){
+  public synchronized void Chiudi(String Nome){
     for(Evento ev : Eventi){
       if(ev.getNome() == Nome){
         Eventi.remove(ev);
