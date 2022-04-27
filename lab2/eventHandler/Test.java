@@ -22,6 +22,11 @@ public class Test {
         ut1.start();
         ut2.start();
         ut3.start();
+
+        admin.join();
+        ut1.join();
+        ut2.join();
+        ut3.join();
     }
 
 }
