@@ -1,7 +1,6 @@
 package lab2.eventHandler;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.TimeUnit;
 
 public class Eventi {
   
