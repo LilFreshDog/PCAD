@@ -10,14 +10,14 @@ public class Eventi {
     this.Eventi = new LinkedBlockingDeque<>();
   }
 
-  public  void Crea(String Nome, Integer Posti){
+  public void Crea(String Nome, Integer Posti){
     Evento evento = new Evento(Nome, Posti);
     Eventi.add(evento);
   }
 
   public void Aggiungi(String Nome, Integer Posti){
     for(Evento ev : Eventi){
-      if(ev.getNome() == Nome)ev.aggiungiPosti(Posti);
+      if(ev.getNome() == Nome) ev.aggiungiPosti(Posti);
     }
   }
 
