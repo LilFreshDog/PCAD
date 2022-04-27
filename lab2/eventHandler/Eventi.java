@@ -10,6 +10,10 @@ public class Eventi {
     this.Eventi = new LinkedBlockingDeque<>();
   }
 
+  public int getNumEventi(){
+    return Eventi.size();
+  }
+  
   public void Crea(String Nome, Integer Posti){
     Evento evento = new Evento(Nome, Posti);
     Eventi.add(evento);
