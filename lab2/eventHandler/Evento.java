@@ -3,7 +3,6 @@ package lab2.eventHandler;
 public class Evento {
   private String Nome;
   private Integer Posti;
-  private
 
   public Evento(String Nome, Integer Posti){
     this.Nome = Nome;
@@ -27,5 +26,4 @@ public class Evento {
     Posti -= postiPrenotati;
     return true;
   }
-
 }
