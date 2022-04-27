@@ -1,6 +1,7 @@
 package lab2.eventHandler;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.TimeUnit;
 
 public class Admin extends Thread{
 
@@ -8,6 +9,31 @@ public class Admin extends Thread{
 
   public Admin(BlockingQueue<Evento> eventi){
     this.eventi = eventi;
+  }
+
+  public void run() {
+    try{
+      creaEvento("Coachella", 50);
+      TimeUnit.SECONDS.sleep(1000);
+      creaEvento("Tomorrowland", 10);
+      TimeUnit.SECONDS.sleep(1000);
+      creaEvento("UnigeParty", 20);
+      aggiungiPosti("Coachella", 50);
+      TimeUnit.SECONDS.sleep(2000);
+      aggiungiPosti("Tomorrowland", 50);
+      TimeUnit.SECONDS.sleep(1000);
+      cancellaEvento("Coachella");
+      creaEvento("Conferenza sui Thread di Java", 50);
+      TimeUnit.SECONDS.sleep(1000);
+      creaEvento("Lezione di PCAD", 100);
+      cancellaEvento("Tomorrowland");
+      TimeUnit.SECONDS.sleep(10_000);
+      cancellaEvento("UnigeParty");
+      cancellaEvento("Conferenza sui Thread di Java");
+      cancellaEvento("Lezione di PCAD");
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 
   public void creaEvento(String nome, Integer posti){
