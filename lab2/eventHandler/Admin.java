@@ -31,7 +31,7 @@ public class Admin extends Thread{
       cancellaEvento("UnigeParty");
       cancellaEvento("Conferenza sui Thread di Java");
       cancellaEvento("Lezione di PCAD");
-    } catch (InterruptedException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
