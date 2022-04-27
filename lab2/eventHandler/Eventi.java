@@ -4,7 +4,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class Eventi {
   
-  BlockingQueue<Evento> Eventi;
+  public BlockingQueue<Evento> Eventi;
 
   public Eventi(){
     this.Eventi = new LinkedBlockingDeque<>();
@@ -13,7 +13,7 @@ public class Eventi {
   public int getNumEventi(){
     return Eventi.size();
   }
-  
+
   public void Crea(String Nome, Integer Posti){
     Evento evento = new Evento(Nome, Posti);
     Eventi.add(evento);
@@ -59,7 +59,12 @@ public class Eventi {
 
   // cancellare l'evente e sbloccare i thread che stanno aspettando di prenotare posti
   public void Chiudi(String Nome){
-    for(Evento ev : Eventi)if(ev.getNome() == Nome)Eventi.remove(ev);
-    notifyAll();
+    for(Evento ev : Eventi){
+      if(ev.getNome() == Nome){
+        Eventi.remove(ev);
+        System.out.println("Cancellato " + Nome);
+        notifyAll();
+      }
+    }
   }
 }

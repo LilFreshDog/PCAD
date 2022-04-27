@@ -19,11 +19,13 @@ public class Evento {
 
   public synchronized void aggiungiPosti(Integer postiNuovi){
     Posti += postiNuovi;
+    System.out.println("Aggiunti " + postiNuovi + " posti a " + Nome);
   } 
  
   public synchronized Boolean prenotaPosti(Integer postiPrenotati){
     if(Posti < postiPrenotati) return false;
     Posti -= postiPrenotati;
+    System.out.println("Prenotati " + postiPrenotati + " posti da " + Nome);
     return true;
   }
 }
