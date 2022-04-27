@@ -5,10 +5,10 @@ import java.util.concurrent.TimeUnit;
 
 public class Admin extends Thread{
 
-  private BlockingQueue<Evento> eventi;
+  private Eventi eventi;
 
   public Admin(BlockingQueue<Evento> eventi){
-    this.eventi = eventi;
+    this.eventi.Eventi = eventi;
   }
 
   public void run() {
