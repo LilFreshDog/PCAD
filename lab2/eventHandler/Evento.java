@@ -22,7 +22,7 @@ public class Evento {
   } 
  
   public synchronized Boolean prenotaPosti(Integer postiPrenotati){
-    if(Posti < postiPrenotati)return false;
+    if(Posti < postiPrenotati) return false;
     Posti -= postiPrenotati;
     return true;
   }
