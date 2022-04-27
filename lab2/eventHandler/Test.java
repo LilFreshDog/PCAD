@@ -12,6 +12,8 @@ public class Test {
         this.utenti = new ArrayList<Utente>();
         this.nomiEventi = new ArrayList<String>();
         this.postiEventi = new ArrayList<Integer>();
+        initializeList();
+        startTesting();
     }
 
     private initializeList(){
