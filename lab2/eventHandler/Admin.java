@@ -1,4 +1,6 @@
 package lab2.eventHandler;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class Admin extends Thread{
 
