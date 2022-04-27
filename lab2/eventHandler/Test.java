@@ -11,10 +11,10 @@ public class Test {
 
     public Test(){
         this.eventi = new Eventi();
-        this.admin = new Admin(this.eventi);
-        this.ut1 = new Utente(this.eventi);
-        this.ut2 = new Utente(this.eventi);
-        this.ut3 = new Utente(this.eventi);
+        this.admin = new Admin(this.eventi.Eventi);
+        this.ut1 = new Utente(this.eventi.Eventi);
+        this.ut2 = new Utente(this.eventi.Eventi);
+        this.ut3 = new Utente(this.eventi.Eventi);
     }
 
     public void startTesting() {

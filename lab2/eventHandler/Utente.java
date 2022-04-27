@@ -14,13 +14,13 @@ public class Utente extends Thread {
 
   public void run() {
     try {
-      eventi.Prenota(eventi.Eventi.get(ThreadLocalRandom.current().nextInt(0, eventi.getNumEventi())), ThreadLocalRandom.current().nextInt(1, 20));
+      eventi.Prenota(eventi.get(ThreadLocalRandom.current().nextInt(0, eventi.size())), ThreadLocalRandom.current().nextInt(1, 20));
       TimeUnit.SECONDS.sleep(500);
-      eventi.Prenota(eventi.Eventi.get(ThreadLocalRandom.current().nextInt(0, eventi.getNumEventi())), ThreadLocalRandom.current().nextInt(1, 20));
+      eventi.Prenota(eventi.get(ThreadLocalRandom.current().nextInt(0, eventi.size())), ThreadLocalRandom.current().nextInt(1, 20));
       TimeUnit.SECONDS.sleep(500);
-      eventi.Prenota(eventi.Eventi.get(ThreadLocalRandom.current().nextInt(0, eventi.getNumEventi())), ThreadLocalRandom.current().nextInt(1, 20));
+      eventi.Prenota(eventi.get(ThreadLocalRandom.current().nextInt(0, eventi.size())), ThreadLocalRandom.current().nextInt(1, 20));
       TimeUnit.SECONDS.sleep(500);
-      eventi.Prenota(eventi.Eventi.get(ThreadLocalRandom.current().nextInt(0, eventi.getNumEventi())), ThreadLocalRandom.current().nextInt(1, 20));
+      eventi.Prenota(eventi.get(ThreadLocalRandom.current().nextInt(0, eventi.size())), ThreadLocalRandom.current().nextInt(1, 20));
     } catch (Exception e) {
       e.printStackTrace();
     }
