@@ -15,6 +15,7 @@ public class Utente extends Thread {
 
   // method for the user to reserve a seat by calling the reserve method of the event
   public Boolean prenotaPosti() {
+    System.out.println("Provo a prenotare " + postiDaPrenotare + " posti per l'evento " + evento.getNome());
     return evento.prenotaPosti(postiDaPrenotare);
   }
 
