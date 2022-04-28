@@ -3,6 +3,7 @@ package lab2.eventHandler;
 public class Evento {
   private String Nome;
   private Integer Posti;
+  private Boolean prenotazioniAperte = true;
 
   public Evento(String Nome, Integer Posti){
     this.Nome = Nome;
@@ -15,6 +16,14 @@ public class Evento {
 
   public Integer getPosti() {
     return Posti;
+  }
+
+  public Boolean statoPrenotazioni(){
+    return prenotazioniAperte;
+  }
+
+  public void chiudiPrenotazioni(){
+    prenotazioniAperte = false;
   }
 
   public synchronized void aggiungiPosti(Integer postiNuovi){

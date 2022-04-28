@@ -34,8 +34,9 @@ public class Admin extends Thread{
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
       aggiungiPosti("Astroworld", 3);
-      TimeUnit.SECONDS.sleep(4);
-      eventi.ListaEventi();
+      TimeUnit.SECONDS.sleep(8);
+      chiudiEvento("Coachella");
+      chiudiEvento("Astroworld");
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -53,7 +54,7 @@ public class Admin extends Thread{
     return;
   }
 
-  public void cancellaEvento(String nome){
+  public void chiudiEvento(String nome){
     // cancellare un evento
     eventi.Chiudi(nome);
     return;

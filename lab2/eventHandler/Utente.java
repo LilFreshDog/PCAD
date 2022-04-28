@@ -21,6 +21,7 @@ public class Utente extends Thread {
 
   public void run() {
     try {
+      TimeUnit.SECONDS.sleep(10);
       eventi.Prenota(takeRandomName(),(int)Math.floor(Math.random()*(5-1+1)+1));
       TimeUnit.SECONDS.sleep(3);
       eventi.Prenota(takeRandomName(),(int)Math.floor(Math.random()*(5-1+1)+1));

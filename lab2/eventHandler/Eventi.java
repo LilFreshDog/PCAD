@@ -32,15 +32,15 @@ public class Eventi {
   //fare controllo se la prenotaPosti ritorna true o false [bisogna gestire il thread che vuole prenotare]
   public synchronized void Prenota(String Nome, Integer Posti){
     for(Evento ev : Eventi){
-      if(ev.getNome() == Nome){
+      if(ev.getNome() == Nome && ev.statoPrenotazioni()){
         while(!ev.prenotaPosti(Posti)){
           try { 
             wait();
             //esiste ancora l'evento cercato?
-            if(!esisteEvento(Nome))return;
+            if(!ev.statoPrenotazioni())return;
+            System.out.println("🟡 Waiting for " + Posti + " seats to free for " + Nome + "...( " + ev.getPosti() + " available )");
           } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); 
-            System.out.println("Waiting for some seats to free...");
           }
         }
       }
@@ -65,8 +65,8 @@ public class Eventi {
   public synchronized void Chiudi(String Nome){
     for(Evento ev : Eventi){
       if(ev.getNome() == Nome){
-        Eventi.remove(ev);
-        System.out.println("Cancellato " + Nome);
+        ev.chiudiPrenotazioni();
+        System.out.println("⚪️ Prenotazioni chiuse per " + Nome);
         notifyAll();
       }
     }
