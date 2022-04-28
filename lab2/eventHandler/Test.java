@@ -10,9 +10,9 @@ public class Test {
     public Test(){
         this.eventi = new Eventi();
         this.admin = new Admin(this.eventi);
-        this.ut1 = new Utente("Pietro", this.eventi);
-        this.ut2 = new Utente("Tony",this.eventi);
-        this.ut3 = new Utente("Luigi", this.eventi);
+        this.ut1 = new Utente(this.eventi);
+        this.ut2 = new Utente(this.eventi);
+        this.ut3 = new Utente(this.eventi);
     }
 
     public void startTesting() {    

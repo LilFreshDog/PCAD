@@ -4,11 +4,9 @@ import java.util.concurrent.TimeUnit;
 public class Utente extends Thread {
 
   private  Eventi eventi;
-  private String nome;
 
-  public Utente(String nome, Eventi eventi){
+  public Utente(Eventi eventi){
     this.eventi = eventi;
-    this.nome = nome;
   }
 
   public String takeRandomName(){
