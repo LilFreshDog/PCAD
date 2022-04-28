@@ -17,6 +17,7 @@ public class Eventi {
   public void Crea(String Nome, Integer Posti){
     Evento evento = new Evento(Nome, Posti);
     Eventi.add(evento);
+    System.out.println("Creato " + Nome + " con " + Posti + " posti");
   }
 
   public synchronized void Aggiungi(String Nome, Integer Posti){

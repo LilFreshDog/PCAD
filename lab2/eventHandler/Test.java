@@ -12,9 +12,9 @@ public class Test {
     public Test(){
         this.eventi = new Eventi();
         this.admin = new Admin(this.eventi);
-        this.ut1 = new Utente(this.eventi);
-        this.ut2 = new Utente(this.eventi);
-        this.ut3 = new Utente(this.eventi);
+        this.ut1 = new Utente("Pietro", this.eventi);
+        this.ut2 = new Utente("Tony",this.eventi);
+        this.ut3 = new Utente("Luigi", this.eventi);
     }
 
     public void startTesting() {    
@@ -22,11 +22,8 @@ public class Test {
             admin.start();
             ut1.start();
             ut2.start();
-            ut3.start();
 
             ut1.join();
-            ut2.join();
-            ut3.join();
             admin.join();
 
             eventi.ListaEventi();

@@ -13,24 +13,29 @@ public class Admin extends Thread{
 
   public void run() {
     try{
-      creaEvento("Coachella", 50);
+      creaEvento("Coachella", 1);
+      creaEvento("Astroworld", 20);
       TimeUnit.SECONDS.sleep(3);
-      creaEvento("Tomorrowland", 10);
-      TimeUnit.SECONDS.sleep(2);
-      creaEvento("UnigeParty", 20);
-      aggiungiPosti("Coachella", 50);
+      aggiungiPosti("Coachella", 1);
       TimeUnit.SECONDS.sleep(3);
-      aggiungiPosti("Tomorrowland", 50);
+      aggiungiPosti("Coachella", 1);
       TimeUnit.SECONDS.sleep(3);
+      aggiungiPosti("Coachella", 1);
+      TimeUnit.SECONDS.sleep(3);
+      aggiungiPosti("Coachella", 1);
+      TimeUnit.SECONDS.sleep(3);
+      aggiungiPosti("Coachella", 1);
+      TimeUnit.SECONDS.sleep(3);
+      aggiungiPosti("Coachella", 1);
+      TimeUnit.SECONDS.sleep(3);
+      aggiungiPosti("Coachella", 1);
+      TimeUnit.SECONDS.sleep(3);
+      aggiungiPosti("Coachella", 1);
+      TimeUnit.SECONDS.sleep(3);
+      aggiungiPosti("Coachella", 1);
+      TimeUnit.SECONDS.sleep(4);
       cancellaEvento("Coachella");
-      creaEvento("Conferenza sui Thread di Java", 50);
-      TimeUnit.SECONDS.sleep(3);
-      creaEvento("Lezione di PCAD", 100);
-      cancellaEvento("Tomorrowland");
-      TimeUnit.SECONDS.sleep(3);
-      cancellaEvento("UnigeParty");
-      cancellaEvento("Conferenza sui Thread di Java");
-      cancellaEvento("Lezione di PCAD");
+
     } catch (Exception e) {
       e.printStackTrace();
     }
