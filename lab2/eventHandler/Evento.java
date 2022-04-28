@@ -28,13 +28,13 @@ public class Evento {
 
   public synchronized void aggiungiPosti(Integer postiNuovi){
     Posti += postiNuovi;
-    System.out.println("\n\n🟢 Aggiunti " + postiNuovi + " posti a " + Nome);
+    System.out.println("🟢 Aggiunti " + postiNuovi + " posti a " + Nome+" (totale: " + Posti + ")");
   } 
  
-  public synchronized Boolean prenotaPosti(Integer postiPrenotati){
+  public synchronized Boolean prenotaPosti(String nomeProcesso, Integer postiPrenotati){
     if(Posti < postiPrenotati) return false;
     Posti -= postiPrenotati;
-    System.out.println("\n\n🔴 Prenotati " + postiPrenotati + " posti da " + Nome);
+    System.out.println("🔴 "+nomeProcesso+" ha prenotato "+postiPrenotati+" posti da "+Nome+". (sono disponibili "+Posti+" posti...) ");
     return true;
   }
 }

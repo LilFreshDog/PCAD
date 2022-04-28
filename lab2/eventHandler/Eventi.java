@@ -17,7 +17,7 @@ public class Eventi {
   public void Crea(String Nome, Integer Posti){
     Evento evento = new Evento(Nome, Posti);
     Eventi.add(evento);
-    System.out.println("Creato " + Nome + " con " + Posti + " posti");
+    System.out.println("🆕 Creato " + Nome + " con " + Posti + " posti");
   }
 
   public synchronized void Aggiungi(String Nome, Integer Posti){
@@ -30,15 +30,15 @@ public class Eventi {
   }
 
   //fare controllo se la prenotaPosti ritorna true o false [bisogna gestire il thread che vuole prenotare]
-  public synchronized void Prenota(String Nome, Integer Posti){
+  public synchronized void Prenota(String nomeProcesso, String nomeEvento, Integer posti){
     for(Evento ev : Eventi){
-      if(ev.getNome() == Nome && ev.statoPrenotazioni()){
-        while(!ev.prenotaPosti(Posti)){
+      if(ev.getNome() == nomeEvento && ev.statoPrenotazioni()){
+        while(!ev.prenotaPosti(nomeProcesso, posti)){
           try { 
             wait();
             //esiste ancora l'evento cercato?
             if(!ev.statoPrenotazioni())return;
-            System.out.println("🟡 Waiting for " + Posti + " seats to free for " + Nome + "...( " + ev.getPosti() + " available )");
+            System.out.println("🟡 "+nomeProcesso+" vuole "+posti+" per "+nomeEvento+". (sono disponibili "+ev.getPosti()+" posti...) ");
           } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); 
           }
@@ -53,11 +53,11 @@ public class Eventi {
   }
 
   public void ListaEventi(){
-    System.out.println("\n\n ---------------------  EVENTI ------------------------\n\n");
+    System.out.println("\n\n----------------- EVENTI -------------------------");
     for(Evento ev : Eventi){
-      System.out.println("\n🟣 " + ev.getNome() + " posti disponibili : " + ev.getPosti() + "\n");
+      System.out.println("📅 " + ev.getNome() + " posti disponibili: " + ev.getPosti());
     }
-    System.out.println("\n\n --------------------------------------------------\n\n");
+    System.out.println("--------------------------------------------------\n\n");
     
   }
 
@@ -66,7 +66,7 @@ public class Eventi {
     for(Evento ev : Eventi){
       if(ev.getNome() == Nome){
         ev.chiudiPrenotazioni();
-        System.out.println("⚪️ Prenotazioni chiuse per " + Nome);
+        System.out.println("🚫 Prenotazioni chiuse per " + Nome);
         notifyAll();
       }
     }

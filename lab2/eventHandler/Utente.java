@@ -4,8 +4,10 @@ import java.util.concurrent.TimeUnit;
 public class Utente extends Thread {
 
   private  Eventi eventi;
+  private String nome;
 
-  public Utente(Eventi eventi){
+  public Utente(String nome, Eventi eventi){
+    this.nome = nome;
     this.eventi = eventi;
   }
 
@@ -22,9 +24,9 @@ public class Utente extends Thread {
   public void run() {
     try {
       TimeUnit.SECONDS.sleep(10);
-      eventi.Prenota(takeRandomName(),(int)Math.floor(Math.random()*(5-1+1)+1));
+      eventi.Prenota(nome, takeRandomName(), (int)Math.floor(Math.random()*(5-1+1)+1));
       TimeUnit.SECONDS.sleep(3);
-      eventi.Prenota(takeRandomName(),(int)Math.floor(Math.random()*(5-1+1)+1));
+      eventi.Prenota(nome, takeRandomName(), (int)Math.floor(Math.random()*(5-1+1)+1));
     } catch (Exception e) {
       e.printStackTrace();
     }
