@@ -53,9 +53,12 @@ public class Eventi {
   }
 
   public void ListaEventi(){
+    System.out.println("\n\n ---------------------  EVENTI ------------------------\n\n");
     for(Evento ev : Eventi){
-      System.out.println(ev.getNome() + " posti disponibili : " + ev.getPosti());
+      System.out.println("\n🟣 " + ev.getNome() + " posti disponibili : " + ev.getPosti() + "\n");
     }
+    System.out.println("\n\n --------------------------------------------------\n\n");
+    
   }
 
   // cancellare l'evente e sbloccare i thread che stanno aspettando di prenotare posti

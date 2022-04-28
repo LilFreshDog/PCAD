@@ -12,28 +12,30 @@ public class Admin extends Thread{
   public void run() {
     try{
       creaEvento("Coachella", 1);
-      creaEvento("Astroworld", 20);
+      creaEvento("Astroworld", 1);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
+      aggiungiPosti("Astroworld", 3);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
+      aggiungiPosti("Astroworld", 3);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
+      aggiungiPosti("Astroworld", 3);
       TimeUnit.SECONDS.sleep(4);
-      cancellaEvento("Coachella");
-
+      eventi.ListaEventi();
     } catch (Exception e) {
       e.printStackTrace();
     }
