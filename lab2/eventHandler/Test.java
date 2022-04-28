@@ -1,6 +1,4 @@
 package lab2.eventHandler;
-import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Test {
     Admin admin;
