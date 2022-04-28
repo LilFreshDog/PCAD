@@ -58,5 +58,9 @@ debug
 # Zip
 *.zip
 
-#MacOS
+# MacOS
 .DS_Store
+
+# Java
+*.class
+*.jar
