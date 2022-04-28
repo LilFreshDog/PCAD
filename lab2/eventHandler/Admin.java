@@ -13,6 +13,8 @@ public class Admin extends Thread{
     try{
       creaEvento("Coachella", 1);
       creaEvento("Astroworld", 1);
+      creaEvento("Conferenza sui thread", 1);
+      creaEvento("Lezione PCAD", 1);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
       TimeUnit.SECONDS.sleep(3);
@@ -22,6 +24,7 @@ public class Admin extends Thread{
       aggiungiPosti("Astroworld", 3);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
+      aggiungiPosti("Conferanza sui thread", 10);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
       TimeUnit.SECONDS.sleep(3);
@@ -29,6 +32,7 @@ public class Admin extends Thread{
       aggiungiPosti("Astroworld", 3);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
+      aggiungiPosti("Lezione PCAD", 20);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
       TimeUnit.SECONDS.sleep(3);
@@ -37,6 +41,8 @@ public class Admin extends Thread{
       TimeUnit.SECONDS.sleep(8);
       chiudiEvento("Coachella");
       chiudiEvento("Astroworld");
+      chiudiEvento("Conferenza sui thread");
+      chiudiEvento("Lezione PCAD");
     } catch (Exception e) {
       e.printStackTrace();
     }
