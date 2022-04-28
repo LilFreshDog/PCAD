@@ -28,13 +28,16 @@ public class Evento {
 
   public synchronized void aggiungiPosti(Integer postiNuovi){
     Posti += postiNuovi;
-    System.out.println("🟢 Aggiunti " + postiNuovi + " posti a " + Nome+" (totale: " + Posti + ")");
+    String str = postiNuovi == 1 ? "Aggiunto 1 posto" : "Aggiunti "+postiNuovi+" posti";
+    System.out.println("🟢 " + str + " a " + Nome+" (totale: " + Posti + ")");
   } 
  
   public synchronized Boolean prenotaPosti(String nomeProcesso, Integer postiPrenotati){
     if(Posti < postiPrenotati) return false;
     Posti -= postiPrenotati;
-    System.out.println("🔴 "+nomeProcesso+" ha prenotato "+postiPrenotati+" posti da "+Nome+". (sono disponibili "+Posti+" posti...) ");
+    String str1 = postiPrenotati == 1 ? "1 posto" : postiPrenotati + " posti";
+    String str2 = Posti == 1 ? "è disponibile 1 solo posto" : "sono disponibili "+Posti+" posti";
+    System.out.println("🔴 "+nomeProcesso+" ha prenotato "+str1+" da "+Nome+". ("+str2+") ");
     return true;
   }
 }

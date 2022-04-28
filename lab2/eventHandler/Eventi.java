@@ -17,7 +17,8 @@ public class Eventi {
   public void Crea(String Nome, Integer Posti){
     Evento evento = new Evento(Nome, Posti);
     Eventi.add(evento);
-    System.out.println("🆕 Creato " + Nome + " con " + Posti + " posti");
+    String str = Posti == 1 ? "1 posto" : Posti + " posti";
+    System.out.println("🆕 Creato " + Nome + " con " + str);
   }
 
   public synchronized void Aggiungi(String Nome, Integer Posti){
@@ -38,7 +39,9 @@ public class Eventi {
             wait();
             //esiste ancora l'evento cercato?
             if(!ev.statoPrenotazioni())return;
-            System.out.println("🟡 "+nomeProcesso+" vuole "+posti+" per "+nomeEvento+". (sono disponibili "+ev.getPosti()+" posti...) ");
+            String str1 = posti==1 ? "1 posto" : posti+" posti";
+            String str2 = ev.getPosti()==1 ? "è disponibile 1 solo posto" : "sono disponibili " + ev.getPosti() + " posti";
+            System.out.println("🟡 "+nomeProcesso+" vuole "+str1+" per "+nomeEvento+". ("+str2+") ");
           } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); 
           }
@@ -53,11 +56,11 @@ public class Eventi {
   }
 
   public void ListaEventi(){
-    System.out.println("\n\n----------------- EVENTI -------------------------");
+    System.out.println("\n----------------- EVENTI -------------------------");
     for(Evento ev : Eventi){
       System.out.println("📅 " + ev.getNome() + " posti disponibili: " + ev.getPosti());
     }
-    System.out.println("--------------------------------------------------\n\n");
+    System.out.println("--------------------------------------------------\n");
     
   }
 
