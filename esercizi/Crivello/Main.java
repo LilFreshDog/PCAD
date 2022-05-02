@@ -1,4 +1,4 @@
-package Crivello;
+package esercizi.Crivello;
 import java.util.*;
 
 public class Main {

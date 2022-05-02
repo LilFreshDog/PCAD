@@ -24,7 +24,9 @@ public class Admin extends Thread{
       aggiungiPosti("Astroworld", 3);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
-      aggiungiPosti("Conferanza sui thread", 10);
+      TimeUnit.SECONDS.sleep(3);
+      cancellaEvento("Lezione PCAD");
+      aggiungiPosti("Conferenza sui thread", 10);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
       TimeUnit.SECONDS.sleep(3);
@@ -32,7 +34,6 @@ public class Admin extends Thread{
       aggiungiPosti("Astroworld", 3);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
-      aggiungiPosti("Lezione PCAD", 20);
       TimeUnit.SECONDS.sleep(3);
       aggiungiPosti("Coachella", 1);
       TimeUnit.SECONDS.sleep(3);
@@ -42,7 +43,6 @@ public class Admin extends Thread{
       chiudiEvento("Coachella");
       chiudiEvento("Astroworld");
       chiudiEvento("Conferenza sui thread");
-      chiudiEvento("Lezione PCAD");
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -63,6 +63,11 @@ public class Admin extends Thread{
   public void chiudiEvento(String nome){
     // cancellare un evento
     eventi.Chiudi(nome);
+    return;
+  }
+  
+  public void cancellaEvento(String nome){
+    eventi.Cancella(nome);
     return;
   }
 }

@@ -1,5 +1,4 @@
-package Crivello;
-import java.util.*;
+package esercizi.Crivello;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 

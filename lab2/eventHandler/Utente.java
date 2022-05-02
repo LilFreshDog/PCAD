@@ -3,18 +3,18 @@ import java.util.concurrent.TimeUnit;
 // qua mi segno tutte le donne che scopo
 public class Utente extends Thread {
 
-  private  Eventi eventi;
+  private  Eventi listaeventi;
   private String nome;
 
   public Utente(String nome, Eventi eventi){
     this.nome = nome;
-    this.eventi = eventi;
+    this.listaeventi = eventi;
   }
 
   public String takeRandomName(){
-    int randomNumber = (int)Math.floor(Math.random()*eventi.getNumEventi());
+    int randomNumber = (int)Math.floor(Math.random()*listaeventi.getNumEventi());
     int i = 0;
-    for(Evento ev : eventi.Eventi){
+    for(Evento ev : listaeventi.eventi.values()){
       if( i == randomNumber)return ev.getNome();
       i++;
     }
@@ -24,9 +24,9 @@ public class Utente extends Thread {
   public void run() {
     try {
       TimeUnit.SECONDS.sleep(10);
-      eventi.Prenota(nome, takeRandomName(), (int)Math.floor(Math.random()*(5-1+1)+1));
+      listaeventi.Prenota(nome, takeRandomName(), (int)Math.floor(Math.random()*(5-1+1)+1));
       TimeUnit.SECONDS.sleep(3);
-      eventi.Prenota(nome, takeRandomName(), (int)Math.floor(Math.random()*(5-1+1)+1));
+      listaeventi.Prenota(nome, takeRandomName(), (int)Math.floor(Math.random()*(5-1+1)+1));
     } catch (Exception e) {
       e.printStackTrace();
     }
