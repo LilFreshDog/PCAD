@@ -17,18 +17,19 @@ public class MyWorker extends SwingWorker<String, Integer> {
 
     @Override
     protected String doInBackground() throws Exception {
+        mygui.counter+=1;
+        mygui.statusLabel.setText(Integer.toString(mygui.counter)); 
         Thread.sleep(1000); 
         return "Done!";
     }
     
     @Override
     protected void process(List<Integer> chunks) {
-        
     }
 
     @Override
     protected void done() {
-    	
+
     }
 
 }

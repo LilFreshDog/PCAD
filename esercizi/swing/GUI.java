@@ -12,7 +12,7 @@ public class GUI extends JFrame {
     int counter;
     
     public GUI() {
-        super("Swing");
+        super("👨‍💻👨‍💻👨‍💻");
         counter=0;
         step = new JButton("Step");
         statusLabel = new JLabel("0");
