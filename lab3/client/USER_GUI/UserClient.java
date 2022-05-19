@@ -15,7 +15,6 @@ public class UserClient {
 			System.out.println("Error connecting to server");
 			System.exit(1);
 		}
-
 		try {
 			out = new PrintWriter(clientSocket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -46,5 +45,13 @@ public class UserClient {
 			System.out.println("Error closing connection");
 			System.exit(1);
 		}
+	}
+
+	public String getEventi() {
+		return sendMessage("getEventi");
+	}
+
+	public String prenota(String evento, int posti) {
+		return sendMessage("prenota|" + evento + "|" + posti);
 	}
 }
