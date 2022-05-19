@@ -14,7 +14,6 @@ public class Server implements Runnable {
   public Server(int serverPort) {
     this.serverPort = serverPort;
     this.eventi = new Eventi();
-    eventi.Crea("Coachella", 10);
   }
 
   @Override
@@ -59,5 +58,11 @@ public class Server implements Runnable {
     } catch (IOException e) {
       throw new RuntimeException("Error closing server", e);
     }
+  }
+
+  public void StampaEventi(){
+    System.out.println("\n\n-------------------- 🔩 SERVER DEBUG CONSOLE 🔩 --------------------\n\n");
+    eventi.ListaEventi();
+    System.out.println("\n\n------------------------------------------------------------\n\n");
   }
 }
