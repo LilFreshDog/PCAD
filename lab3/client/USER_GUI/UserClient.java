@@ -8,7 +8,8 @@ public class UserClient {
 	private PrintWriter out;
 	private BufferedReader in;
 
-	public void startConnection(String ip, int port) {
+	// constructor
+	public UserClient(String ip, int port) {
 		try {
 			clientSocket = new Socket(ip, port);
 		} catch (Exception e) {
@@ -24,7 +25,7 @@ public class UserClient {
 		}
 	}
 
-	public String sendMessage(String msg) {
+	private String sendMessage(String msg) {
 		out.println(msg);
 		try {
 			String resp = in.readLine();
