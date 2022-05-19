@@ -36,7 +36,7 @@ public class Server implements Runnable {
         System.out.println("\n\n🥳 accettata la connessione al client\n");
       } catch (IOException e) {
         if (isStopped()) {
-          System.out.println("Server Stopped.");
+          System.out.println("❌Server Stopped.");
           return;
         }
         throw new RuntimeException("Error accepting client connection", e);

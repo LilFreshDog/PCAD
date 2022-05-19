@@ -44,11 +44,11 @@ public class WorkerRunnable implements Runnable {
   }
 	
 	private void prenotaEvento(String nome, Integer posti){
-    eventi.Prenota("SALAME",nome, posti);
+    eventi.Prenota("PIZZA",nome, posti);
   }
 
 	private void aggiungiPosti(String nome, Integer posti){
-    eventi.Aggiungi(nome, posti);
+    eventi.aggiungiPosti(nome, posti);
   }
 
   private void cancellaEvento(String nome){
@@ -60,6 +60,6 @@ public class WorkerRunnable implements Runnable {
   }
 
 	private void listaEventi(){
-		
+
   }
 }
