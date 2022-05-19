@@ -1,3 +1,4 @@
+package lab3.client.user_gui;
 import org.w3c.dom.events.Event;
 
 public class Evento {

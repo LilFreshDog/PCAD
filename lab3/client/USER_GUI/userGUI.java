@@ -1,4 +1,4 @@
-package client.USER_GUI;
+package lab3.client.user_gui;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
