@@ -1,42 +1,21 @@
 package lab3.client.user_gui;
+import lab3.client.Client;
 import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class UserClient {
+import lab3.client.Client;
+
+public class UserClient extends Client {
 	private Socket clientSocket;
 	private PrintWriter out;
 	private BufferedReader in;
 
-	// constructor
-	public UserClient(String ip, int port) {
-		try {
-			clientSocket = new Socket(ip, port);
-		} catch (Exception e) {
-			System.out.println("Error connecting to server");
-			System.exit(1);
-		}
-		try {
-			out = new PrintWriter(clientSocket.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		} catch (Exception e) {
-			System.out.println("Error creating streams");
-			System.exit(1);
-		}
+	public UserClient(String hostname, int port) {
+		super(hostname, port);
 	}
 
-	private String sendMessage(String msg) {
-		out.println(msg);
-		try {
-			String resp = in.readLine();
-			return resp;
-		} catch (Exception e) {
-			System.out.println("Error reading message");
-			System.exit(1);
-		}
-		return null;
-	}
-
+	// metodi per Utente
 	public void stopConnection() {
 		try {
 			in.close();
@@ -55,4 +34,6 @@ public class UserClient {
 	public String prenota(String evento, int posti) {
 		return sendMessage("prenota|" + evento + "|" + posti);
 	}
+
+
 }
