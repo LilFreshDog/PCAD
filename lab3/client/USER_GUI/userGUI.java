@@ -1,63 +1,41 @@
-// Packages to import
-package GUI;
+package client.USER_GUI;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
 public class userGUI {
-	// frame
 	JFrame f;
-	// Table
 	JTable j;
 
-	// Constructor
-	userGUI()
-	{
-		// Frame initialization
+	userGUI() {
 		f = new JFrame();
+		f.setTitle("User GUI");
 
-		// Frame Title
-		f.setTitle("JTable Example");
+		//Client api = new Client("localhost", 80);
 
-		// Data to be displayed in the JTable
-		String[][] data = {
-			{ "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Kundan Kumar Jha", "4031", "CSE" },
-			{ "Anand Jha", "6014", "IT" }
-		};
+		// Richiedo la lista degli eventi
 
-		// Column Names
-		String[] columnNames = { "Name", "Roll Number", "Department" };
+		// Itero sulla lista e inizializzo gli oggetti eventi
+		/*List<Evento> eventList = new ArrayList<Evento>();
+		for (int i : listaeventi) {
+			Evento e = new Evento(i[0], i[1]);
+			eventList.add(e);
+		}*/
 
-		// Initializing the JTable
+		// Chiamo la EventoTableModel e gli aggiungo gli eventi
+		//EventoTableModel model = new EventoTableModel(eventList);
+
+		String[][] data = {{"1", "2"}, {"3", "4"}};
+
+		String[] columnNames = { "Evento", "Posti disponibili", "", "" };
+
 		j = new JTable(data, columnNames);
 		j.setBounds(30, 40, 200, 300);
 
-		// adding it to JScrollPane
 		JScrollPane sp = new JScrollPane(j);
 		f.add(sp);
-		// Frame Size
 		f.setSize(500, 200);
-		// Frame Visible = true
 		f.setVisible(true);
 	}
 }
