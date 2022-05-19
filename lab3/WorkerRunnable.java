@@ -40,7 +40,7 @@ public class WorkerRunnable implements Runnable {
 	}
 
 	private void creaEvento(String nome, Integer posti){
-    eventi.Crea(nome, posti);
+    eventi.nuovoEvento(nome, posti);
   }
 	
 	private void prenotaEvento(String nome, Integer posti){
