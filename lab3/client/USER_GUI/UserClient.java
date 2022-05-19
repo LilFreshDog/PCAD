@@ -27,8 +27,8 @@ public class UserClient extends Client {
 		}
 	}
 
-	public String getEventi() {
-		return sendMessage("getEventi");
+	public String lista() {
+		return sendMessage("lista");
 	}
 
 	public String prenota(String evento, int posti) {
