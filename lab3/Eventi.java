@@ -14,16 +14,16 @@ public class Eventi {
     return eventi.size();
   }
 
-  public void Crea(String Nome, Integer Posti){
-    Evento evento = new Evento(Nome, Posti);
-    eventi.put(Nome,evento);
-    String str = Posti == 1 ? "1 posto" : Posti + " posti";
-    System.out.println("🆕 Creato " + Nome + " con " + str);
+  public void nuovoEvento(String nome, Integer posti){
+    Evento evento = new Evento(nome, posti);
+    eventi.put(nome,evento);
+    String str = posti == 1 ? "1 posto" : posti + " posti";
+    System.out.println("🆕 Creato " + nome + " con " + str);
   }
 
-  public void Aggiungi(String Nome, Integer Posti){
-    Evento ev = eventi.get(Nome);
-    ev.aggiungiPosti(Posti);
+  public void aggiungiPosti(String nome, Integer posti){
+    Evento evento = eventi.get(nome);
+    evento.aggiungiPosti(posti);
   }
 
   //fare controllo se la prenotaPosti ritorna true o false [bisogna gestire il thread che vuole prenotare]
