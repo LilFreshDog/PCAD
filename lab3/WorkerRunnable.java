@@ -20,7 +20,7 @@ public class WorkerRunnable implements Runnable {
 			BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true);
 			//implemnto le operazioni del worker
-			parseCommand(serverMessage, output);
+			parseCommand(input.readLine(), output);
 			output.close();
 			input.close();
 		} catch (IOException e) {
