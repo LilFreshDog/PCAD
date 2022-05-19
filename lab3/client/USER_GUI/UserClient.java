@@ -3,14 +3,6 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-/**
-* 1. initiate connection - socket
-* 2. send data - es richiedo gli eventi
-* 3. receive data - la lista degli eventi
-* 4. close connection
-*/
-
-
 public class UserClient {
 	private Socket clientSocket;
 	private PrintWriter out;
@@ -35,13 +27,24 @@ public class UserClient {
 
 	public String sendMessage(String msg) {
 		out.println(msg);
-		String resp = in.readLine();
-		return resp;
+		try {
+			String resp = in.readLine();
+			return resp;
+		} catch (Exception e) {
+			System.out.println("Error reading message");
+			System.exit(1);
+		}
+		return null;
 	}
 
 	public void stopConnection() {
-		in.close();
-		out.close();
-		clientSocket.close();
+		try {
+			in.close();
+			out.close();
+			clientSocket.close();
+		} catch (IOException e) {
+			System.out.println("Error closing connection");
+			System.exit(1);
+		}
 	}
 }
