@@ -1,9 +1,8 @@
-package lab3.client.admin_gui;
+package lab3.client.admin;
 
 import lab3.client.Client;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -15,23 +14,12 @@ public class AdminClient extends Client {
     public AdminClient(String hostname, int port) {
         super(hostname, port);
     }
-
-    // metodi per Utente
-    public void stopConnection() {
-        try {
-            in.close();
-            out.close();
-            clientSocket.close();
-        } catch (IOException e) {
-            System.out.println("Error closing connection");
-            System.exit(1);
-        }
+    public String lista(){
+        return sendMessage("lista");
     }
-
     public String crea(String nome, Integer posti) {
         return sendMessage("crea|"+nome+"|"+posti);
     }
-
     public String aggiungi(String nome, Integer posti){
         return sendMessage("aggiungi|"+nome+"|"+posti);
     }
@@ -41,7 +29,13 @@ public class AdminClient extends Client {
     public String chiudi(String nome){
         return sendMessage("chiudi|"+nome);
     }
-    public String lista(){
-        return sendMessage("lista");
+    public static void main(String[] args) {
+        AdminClient admin = new AdminClient("localhost", 9000);
+        System.out.println(admin.lista());
+        System.out.println(admin.crea("SAS", 100));
+        System.out.println(admin.aggiungi("SAS", 50));
+        System.out.println(admin.chiudi("SAS"));
+        System.out.println(admin.cancella("SAS"));
+        admin.close();
     }
 }

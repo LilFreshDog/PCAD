@@ -1,6 +1,4 @@
-package lab3.client.user_gui;
-import java.util.ArrayList;
-import java.util.List;
+package lab3.client.user;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;

@@ -1,4 +1,4 @@
-package lab3.client.user_gui;
+package lab3.client.user;
 
 public class Main {
     public static void main(String[] args){

@@ -41,7 +41,7 @@ public class Client {
 	return null;
 	}
 
-	public void stopConnection(){
+	public void close(){
 		try {
 			in.close();
 			out.close();
