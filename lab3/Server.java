@@ -9,9 +9,12 @@ public class Server implements Runnable {
   protected ServerSocket serverSocket = null;
   protected boolean isStopped = false;
   protected Thread runningThread = null;
+  protected Eventi eventi;
 
   public Server(int serverPort) {
     this.serverPort = serverPort;
+    this.eventi = new Eventi();
+    eventi.Crea("Coachella", 10);
   }
 
   @Override
@@ -31,6 +34,7 @@ public class Server implements Runnable {
       Socket clientSocket = null;
       try {
         clientSocket = this.serverSocket.accept();
+        System.out.println("\n\n🥳 accettata la connessione al client\n");
       } catch (IOException e) {
         if (isStopped()) {
           System.out.println("Server Stopped.");
@@ -38,7 +42,7 @@ public class Server implements Runnable {
         }
         throw new RuntimeException("Error accepting client connection", e);
       }
-      new Thread( new WorkerRunnable( clientSocket, "Multithreaded Server")).start();
+      new Thread( new WorkerRunnable( clientSocket, "Multithreaded Server", eventi)).start();
     }
 
     System.out.println("Server Stopped.");
