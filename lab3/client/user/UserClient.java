@@ -6,9 +6,6 @@ public class UserClient extends Client {
 	public UserClient(String hostname, int port) {
 		super(hostname, port);
 	}
-	public String lista() {
-		return sendMessage("lista");
-	}
 	public String prenota(String evento, int posti) {
 		return sendMessage("prenota|" + evento + "|" + posti);
 	}

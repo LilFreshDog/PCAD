@@ -14,9 +14,6 @@ public class AdminClient extends Client {
     public AdminClient(String hostname, int port) {
         super(hostname, port);
     }
-    public String lista(){
-        return sendMessage("lista");
-    }
     public String crea(String nome, Integer posti) {
         return sendMessage("crea|"+nome+"|"+posti);
     }
