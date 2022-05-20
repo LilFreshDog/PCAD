@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.HashMap;
 
 public class Client {
 	protected Socket socket;
@@ -51,4 +52,22 @@ public class Client {
 			System.exit(1);
 		}
 	}
+
+	protected HashMap<String, Integer> lista() {
+		String response = sendMessage("lista");
+		/*
+		  string is formatted using | and &
+		  example: "crea|Lezione PCAD|10"
+		  exaple: "lista"
+		 */
+		HashMap<String, Integer> hashMap = new HashMap<>();
+
+		String[] commands = response.split("&");
+		for (String command : commands) {
+			String[] listEntry = command.split("\\|");
+			hashMap.put(listEntry[0], Integer.parseInt(listEntry[1]));
+		}
+		return hashMap;
+	}
+
 }
