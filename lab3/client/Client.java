@@ -1,4 +1,4 @@
-package lab3.client;
+package client;
 
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
