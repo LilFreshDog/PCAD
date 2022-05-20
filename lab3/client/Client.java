@@ -1,9 +1,9 @@
-package client;
+package lab3.client;
 
-import java.io.InputStreamReader;
 import java.io.BufferedReader;
-import java.io.PrintWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client {
@@ -41,7 +41,7 @@ public class Client {
 	return null;
 	}
 
-	public void close(){
+	protected void close() {
 		try {
 			in.close();
 			out.close();
