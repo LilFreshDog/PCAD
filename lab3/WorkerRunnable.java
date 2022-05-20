@@ -1,11 +1,14 @@
 package lab3;
-import java.io.*;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class WorkerRunnable implements Runnable {
-	protected Socket clientSocket = null;
-	protected String serverMessage = null;
+	protected Socket clientSocket;
+	protected String serverMessage;
 	protected Eventi eventi;
 
 	public WorkerRunnable(Socket clientSocket, String serverMessage, Eventi eventi) {
@@ -28,14 +31,14 @@ public class WorkerRunnable implements Runnable {
 		}
  	}
 
-	private void parseCommand(String command, PrintWriter output){
-		String[] mycommand = command.split("|");
-		if(mycommand[0].equals("crea"))creaEvento(mycommand[1], Integer.parseInt(mycommand[2]),output );
-		if(mycommand[0].equals("prenota"))prenotaEvento(mycommand[1], Integer.parseInt(mycommand[2]),output);
-		if(mycommand[0].equals("cancella"))cancellaEvento(mycommand[1], output);
-		if(mycommand[0].equals("chiudi"))chiudiPrenotazioni(mycommand[1], output);
-		if(mycommand[0].equals("aggiungi"))aggiungiPosti(mycommand[1], Integer.parseInt(mycommand[2]), output);;
-		if(mycommand[0].equals("lista"))listaEventi(output);	
+	private void parseCommand(String command, PrintWriter output) {
+		String[] mycommand = command.split("\\|");
+		if (mycommand[0].equals("crea")) creaEvento(mycommand[1], Integer.parseInt(mycommand[2]), output);
+		if (mycommand[0].equals("prenota")) prenotaEvento(mycommand[1], Integer.parseInt(mycommand[2]), output);
+		if (mycommand[0].equals("cancella")) cancellaEvento(mycommand[1], output);
+		if (mycommand[0].equals("chiudi")) chiudiPrenotazioni(mycommand[1], output);
+		if (mycommand[0].equals("aggiungi")) aggiungiPosti(mycommand[1], Integer.parseInt(mycommand[2]), output);
+		if (mycommand[0].equals("lista")) listaEventi(output);
 	}
 
 	private void creaEvento(String nome, Integer posti, PrintWriter output){
@@ -66,7 +69,7 @@ public class WorkerRunnable implements Runnable {
 	private void listaEventi(PrintWriter output){
 		String toReturn = "";
 		for (String key : eventi.eventi.keySet()) {
-     	toReturn = toReturn + key + "&" + eventi.eventi.get(key).getPosti() + "|";
+			toReturn = toReturn + key + "|" + eventi.eventi.get(key).getPosti() + "&";
     }
 
 		toReturn = toReturn.substring(0, toReturn.length()-1);
