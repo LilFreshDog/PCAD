@@ -1,51 +1,25 @@
 package lab3;
 
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Server implements Runnable {
 
-  protected Integer serverPort = 8080;
+  protected Integer port;
   protected ServerSocket serverSocket = null;
   protected boolean isStopped = false;
   protected Thread runningThread = null;
   protected Eventi eventi;
 
-  public Server(int serverPort) {
-    this.serverPort = serverPort;
+  public Server(int port) {
+    this.port = port;
     this.eventi = new Eventi();
   }
 
-  @Override
-  public void run() {
-    
-    synchronized (this) {
-      this.runningThread = Thread.currentThread();
-    }
-
-    try {
-      this.serverSocket = new ServerSocket(this.serverPort);
-    } catch (IOException e) {
-      throw new RuntimeException("Cannot open port 8080", e);
-    }
-
-    while (!isStopped()) {
-      Socket clientSocket = null;
-      try {
-        clientSocket = this.serverSocket.accept();
-        System.out.println("\n\n🥳 accettata la connessione al client\n");
-      } catch (IOException e) {
-        if (isStopped()) {
-          System.out.println("❌Server Stopped.");
-          return;
-        }
-        throw new RuntimeException("Error accepting client connection", e);
-      }
-      
-      new Thread( new WorkerRunnable( clientSocket, "Multithreaded Server", eventi)).start();
-    }
-
-    System.out.println("Server Stopped.");
+  public static void main(String[] args) {
+    Server server = new Server(8080);
+    server.run();
   }
 
   private synchronized boolean isStopped() {
@@ -61,8 +35,40 @@ public class Server implements Runnable {
     }
   }
 
+  @Override
+  public void run() {
+
+    synchronized (this) {
+      this.runningThread = Thread.currentThread();
+    }
+
+    try {
+      this.serverSocket = new ServerSocket(this.port);
+    } catch (IOException e) {
+      throw new RuntimeException("Cannot open port 8080", e);
+    }
+
+    while (!isStopped()) {
+      Socket clientSocket;
+      try {
+        clientSocket = this.serverSocket.accept();
+        System.out.println("\n\n🥳 accettata la connessione al client\n");
+      } catch (IOException e) {
+        if (isStopped()) {
+          System.out.println("❌Server Stopped.");
+          return;
+        }
+        throw new RuntimeException("Error accepting client connection", e);
+      }
+
+      new Thread( new WorkerRunnable( clientSocket, "Multithreaded Server", eventi)).start();
+    }
+
+    System.out.println("Server Stopped.");
+  }
+
   public void StampaEventi(){
-    System.out.println("\n\n-------------------- 🔩 SERVER DEBUG CONSOLE 🔩 --------------------\n\n");
+    System.out.println("\n\n-------------- 🔩 SERVER DEBUG CONSOLE 🔩 ------------------\n\n");
     eventi.ListaEventi();
     System.out.println("\n\n------------------------------------------------------------\n\n");
   }
