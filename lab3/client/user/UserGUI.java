@@ -1,6 +1,5 @@
-package client.user;
-import java.util.ArrayList;
-import java.awt.*;
+package lab3.client.user;
+
 import javax.swing.*;
 
 public class UserGUI {
@@ -28,13 +27,18 @@ public class UserGUI {
 
         f.setLocationRelativeTo(null);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(500, 200);
-		f.setVisible(true);
+        f.setSize(500, 200);
+        f.setVisible(true);
     }
 
-    public static JPanel addPanel(String title){
+    public static JPanel addPanel(String title) {
         JPanel panel = new JPanel();
         panel.add(new JButton(title));
         return panel;
+    }
+
+    public static void main(String[] args) {
+        UserGUI gui = new UserGUI();
+        gui.display();
     }
 }
