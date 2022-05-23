@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class UserGUI {
     public void display() {
-        UserClient client = new UserClient("localhost", "9000");
+        UserClient client = new UserClient("localhost", 9000);
         JFrame window = new JFrame();
         window.setTitle("Prenota tutti gli eventi del mondo 🥳");
         window.setSize(700, 500);
