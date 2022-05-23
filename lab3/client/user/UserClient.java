@@ -11,7 +11,7 @@ public class UserClient extends Client {
 	}
 
 	public static void main(String[] args) {
-		UserClient user = new UserClient("localhost", 9000);
+		UserClient user = new UserClient("2.229.210.246", 8080);
 		System.out.println(user.lista());
 		System.out.println(user.prenota("SAS", 100));
 		user.close();
