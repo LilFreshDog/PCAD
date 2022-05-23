@@ -53,18 +53,18 @@ public class Client {
 		}
 	}
 
-	protected String[][] lista() {
+	protected Object[] lista() {
 		String response = sendMessage("lista");
 		/*
 		  string is formatted using | and &
 		  example: "crea|Lezione PCAD|10"
 		  exaple: "lista"
 		 */
-		ArrayList<ArrayList<String>> eventi = new ArrayList<>();
+		ArrayList<String[]> eventi = new ArrayList<>();
 
 		String[] commands = response.split("&");
 		for (String command : commands) {
-			String[] listEntry = command.split("\\|");
+			String[] listEntry = command.split("|");
 			eventi.add(listEntry);
 		}
 		return eventi.toArray();
