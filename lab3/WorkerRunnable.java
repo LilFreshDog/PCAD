@@ -19,32 +19,62 @@ public class WorkerRunnable implements Runnable {
 
 	public void run() {
 		try {
-			System.out.println("\n\n🛠 WorkerRunnable has started working");
+			System.out.println("\n🛠 WorkerRunnable has started working");
 			BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true);
 			//implemnto le operazioni del worker
-			parseCommand(input.readLine(), output);
+			try {
+				while (parseCommand(input.readLine(), output)) {
+					System.out.println("HO PARSATO TUTTE LE STRINGHE DEL MONDO ZIO");
+				}
+			} catch (Exception e) {
+				System.out.println("FRERO HO FINITO DI PARSARE");
+			}
 			output.close();
 			input.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
- 	}
-
-	private void parseCommand(String command, PrintWriter output) {
-		String[] mycommand = command.split("\\|");
-		if (mycommand[0].equals("crea")) creaEvento(mycommand[1], Integer.parseInt(mycommand[2]), output);
-		if (mycommand[0].equals("prenota")) prenotaEvento(mycommand[1], Integer.parseInt(mycommand[2]), output);
-		if (mycommand[0].equals("cancella")) cancellaEvento(mycommand[1], output);
-		if (mycommand[0].equals("chiudi")) chiudiPrenotazioni(mycommand[1], output);
-		if (mycommand[0].equals("aggiungi")) aggiungiPosti(mycommand[1], Integer.parseInt(mycommand[2]), output);
-		if (mycommand[0].equals("lista")) listaEventi(output);
 	}
 
-	private void creaEvento(String nome, Integer posti, PrintWriter output){
-    eventi.nuovoEvento(nome, posti);
-		output.println("200 ok SOOS");
-  }
+	private boolean parseCommand(String command, PrintWriter output) {
+		System.out.println(command);
+		String[] mycommand = command.split("\\|");
+		if (mycommand[0].equals("crea")) {
+			creaEvento(mycommand[1], Integer.parseInt(mycommand[2]), output);
+			return true;
+		}
+		if (mycommand[0].equals("prenota")) {
+			prenotaEvento(mycommand[1], Integer.parseInt(mycommand[2]), output);
+			return true;
+		}
+		if (mycommand[0].equals("cancella")) {
+			cancellaEvento(mycommand[1], output);
+			return true;
+		}
+		if (mycommand[0].equals("chiudi")) {
+			chiudiPrenotazioni(mycommand[1], output);
+			return true;
+		}
+		if (mycommand[0].equals("aggiungi")) {
+			aggiungiPosti(mycommand[1], Integer.parseInt(mycommand[2]), output);
+			return true;
+		}
+		if (mycommand[0].equals("lista")) {
+			listaEventi(output);
+			return true;
+		}
+		if (mycommand[0].equals("foresta")) {
+			System.out.println("nenno");
+			return true;
+		}
+		return false;
+	}
+
+	private void creaEvento(String nome, Integer posti, PrintWriter output) {
+		eventi.nuovoEvento(nome, posti);
+		output.println("OK|" + nome + "|" + posti);
+	}
 	
 	private void prenotaEvento(String nome, Integer posti, PrintWriter output){
     eventi.Prenota("PIZZA",nome, posti);
@@ -66,13 +96,19 @@ public class WorkerRunnable implements Runnable {
 		output.println("200 ok SOOS");
   }
 
-	private void listaEventi(PrintWriter output){
+	private void listaEventi(PrintWriter output) {
 		String toReturn = "";
 		for (String key : eventi.eventi.keySet()) {
 			toReturn = toReturn + key + "|" + eventi.eventi.get(key).getPosti() + "&";
-    }
+		}
 
-		toReturn = toReturn.substring(0, toReturn.length()-1);
-		output.println(toReturn);
-  }
+		if (toReturn.length() == 0) {
+			System.out.println("NO EVENTS FOUND");
+			output.println("NOEVENTS");
+		} else {
+			System.out.println("SENT EVENTS: " + toReturn);
+			toReturn = toReturn.substring(0, toReturn.length() - 1);
+			output.println(toReturn);
+		}
+	}
 }

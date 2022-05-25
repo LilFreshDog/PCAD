@@ -19,6 +19,7 @@ public class Server implements Runnable {
 
   public static void main(String[] args) {
     Server server = new Server(8080);
+    System.out.println("SERVER STARTED");
     server.run();
   }
 
@@ -52,7 +53,7 @@ public class Server implements Runnable {
       Socket clientSocket;
       try {
         clientSocket = this.serverSocket.accept();
-        System.out.println("\n\n🥳 accettata la connessione al client\n");
+        System.out.println("\n🥳 accettata la connessione al client");
       } catch (IOException e) {
         if (isStopped()) {
           System.out.println("❌Server Stopped.");
@@ -72,4 +73,5 @@ public class Server implements Runnable {
     eventi.ListaEventi();
     System.out.println("\n\n------------------------------------------------------------\n\n");
   }
+
 }

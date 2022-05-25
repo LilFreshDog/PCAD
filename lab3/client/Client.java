@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.Objects;
 
 public class Client {
 	protected Socket socket;
@@ -53,21 +53,25 @@ public class Client {
 		}
 	}
 
-	protected Object[] lista() {
+	protected String lista() {
 		String response = sendMessage("lista");
+
+		if (Objects.equals(response, "NOEVENTS")) {
+			return "NESSUN EVENTO TROVATO";
+		}
 		/*
 		  string is formatted using | and &
 		  example: "crea|Lezione PCAD|10"
 		  exaple: "lista"
-		 */
+
 		ArrayList<String[]> eventi = new ArrayList<>();
 
 		String[] commands = response.split("&");
 		for (String command : commands) {
 			String[] listEntry = command.split("|");
 			eventi.add(listEntry);
-		}
-		return eventi.toArray();
+		}*/
+		return response;
 	}
 
 }

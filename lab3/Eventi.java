@@ -15,6 +15,7 @@ public class Eventi {
   }
 
   public void nuovoEvento(String nome, Integer posti){
+    //TODO: CONTROLLARE SE ESISTE GIA EVENTO
     Evento evento = new Evento(nome, posti);
     eventi.put(nome,evento);
     String str = posti == 1 ? "1 posto" : posti + " posti";
