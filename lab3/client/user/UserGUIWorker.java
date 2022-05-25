@@ -28,6 +28,7 @@ public class UserGUIWorker extends SwingWorker<String, Integer> {
       String eventToBook = gui.Eventfield.getText();
       String seatsToBook = gui.Seatsfield.getText();
       gui.client.prenota(eventToBook, Integer.parseInt(seatsToBook));
+      gui.BookButton.setEnabled(true);
     }
 
 }
