@@ -3,10 +3,22 @@ package lab3.client.user;
 import javax.swing.*;
 import org.w3c.dom.events.Event;
 import java.awt.*;
+import java.awt.event.*;
 
 public class UserGUI {
+
+
+    protected UserClient client;
+    protected JTextField Eventfield = new JTextField();
+    protected JTextField Seatsfield = new JTextField();
+    protected JButton BookButton = new JButton("Prenota");
+
+    public UserGUI(UserClient client){
+      this.client = client;
+    }
+
     public void display() {
-        UserClient client = new UserClient("localhost", 9000);
+        UserGUIListener booking_handler  = new UserGUIListener(this);
         JFrame window = new JFrame();
         window.setTitle("Prenota tutti gli eventi del mondo 🥳");
         window.setSize(700, 500);
@@ -52,7 +64,6 @@ public class UserGUI {
         
         JLabel eventlabel = new JLabel("Evento da prenotare");
         eventlabel.setForeground(Color.WHITE);
-        JTextField Eventfield = new JTextField();
         
         prenotaEventoPanel.add(eventlabel,BorderLayout.NORTH);
         prenotaEventoPanel.add(Eventfield,BorderLayout.SOUTH);
@@ -65,15 +76,15 @@ public class UserGUI {
     
         JLabel eventlabel2 = new JLabel("Posti");
         eventlabel2.setForeground(Color.WHITE);
-        JTextField Seatsfield = new JTextField();
         
         prenotaEventoPanel2.add(eventlabel2,BorderLayout.NORTH);
         prenotaEventoPanel2.add(Seatsfield,BorderLayout.SOUTH);
         prenotaEventoPanel2.setBackground(Color.PINK);
         
         //
-        JButton BookButton = new JButton("Prenota");
-    
+       
+        BookButton.addActionListener(booking_handler);
+
         inputpanel.add(prenotaEventoPanel);
         inputpanel.add(prenotaEventoPanel2);
         inputpanel.add(BookButton);
