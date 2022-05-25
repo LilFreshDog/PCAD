@@ -64,3 +64,6 @@ debug
 # Java
 *.class
 *.jar
+
+# IntelliJ
+out
