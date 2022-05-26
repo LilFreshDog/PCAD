@@ -1,6 +1,7 @@
 package lab3.client.user;
 
 import lab3.client.Client;
+import java.util.*;
 
 public class UserClient extends Client {
 
@@ -15,7 +16,12 @@ public class UserClient extends Client {
 	}
 
 	public static void main(String[] args) {
-		UserClient user = new UserClient("localhost", 8080);
+		Scanner input = new Scanner(System.in);
+		System.out.println("Inserisci hostname: ");
+		String hostname = input.nextLine();
+		System.out.println("Inserisci port: ");
+		int port = input.nextInt();
+		UserClient user = new UserClient(hostname, port);
 		System.out.println(user.lista());
 		System.out.println(user.prenota("SAS", 100));
 		user.close();
