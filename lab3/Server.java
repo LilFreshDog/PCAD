@@ -3,6 +3,7 @@ package lab3;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Server implements Runnable {
 
@@ -18,8 +19,12 @@ public class Server implements Runnable {
   }
 
   public static void main(String[] args) {
-    Server server = new Server(8080);
-    System.out.println("SERVER STARTED");
+    System.out.println("🟢 SERVER STARTED 🟢");
+    Scanner input = new Scanner(System.in);
+    System.out.println("🚀Inserisci porta: ");
+    int port = input.nextInt();
+    input.close();
+    Server server = new Server(port);
     server.run();
   }
 
