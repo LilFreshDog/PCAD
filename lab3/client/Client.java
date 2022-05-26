@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Objects;
+import java.util.ArrayList;
 
 public class Client {
 	protected Socket socket;
@@ -53,16 +54,16 @@ public class Client {
 		}
 	}
 
-	protected String lista() {
+	protected ArrayList<String[]> lista() {
 		String response = sendMessage("lista");
 
 		if (Objects.equals(response, "NOEVENTS")) {
-			return "NESSUN EVENTO TROVATO";
+			return null;
 		}
-		/*
-		  string is formatted using | and &
-		  example: "crea|Lezione PCAD|10"
-		  exaple: "lista"
+	
+		//string is formatted using | and &
+		//example: "crea|Lezione PCAD|10"
+		//exaple: "lista"
 
 		ArrayList<String[]> eventi = new ArrayList<>();
 
@@ -70,8 +71,8 @@ public class Client {
 		for (String command : commands) {
 			String[] listEntry = command.split("|");
 			eventi.add(listEntry);
-		}*/
-		return response;
+		}
+		return eventi;
 	}
 
 }
