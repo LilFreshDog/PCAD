@@ -54,7 +54,7 @@ public class Client {
 		}
 	}
 
-	protected ArrayList<String[]> lista() {
+	protected Object[][] lista() {
 		String response = sendMessage("lista");
 
 		if (Objects.equals(response, "NOEVENTS")) {
@@ -71,8 +71,13 @@ public class Client {
 		for (String command : commands) {
 			String[] listEntry = command.split("|");
 			eventi.add(listEntry);
+		}	
+
+		Object[][] eventiArray = new Object[eventi.size()][];
+		for (int i = 0; i < eventi.size(); i++) {
+			eventiArray[i] = eventi.get(i);
 		}
-		return eventi;
+		return eventiArray;
 	}
 
 }
