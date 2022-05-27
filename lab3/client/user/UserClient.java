@@ -1,7 +1,8 @@
 package lab3.client.user;
 
 import lab3.client.Client;
-import java.util.*;
+
+import java.util.Scanner;
 
 public class UserClient extends Client {
 
@@ -16,6 +17,10 @@ public class UserClient extends Client {
 	}
 
 	public static void main(String[] args) {
+		// connetersi al server
+		// apri GUI
+		// ascolta gui
+		// parla con server
 		Scanner input = new Scanner(System.in);
 		System.out.println("Inserisci hostname: ");
 		String hostname = input.nextLine();
@@ -23,7 +28,7 @@ public class UserClient extends Client {
 		int port = input.nextInt();
 		UserClient user = new UserClient(hostname, port);
 		input.close();
-		System.out.println(user.prenota("SAS", 100));
-		user.close();
+		//System.out.println(user.prenota("SAS", 100));
+		//user.close();
 	}
 }

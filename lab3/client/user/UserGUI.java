@@ -1,9 +1,7 @@
 package lab3.client.user;
 
 import javax.swing.*;
-import org.w3c.dom.events.Event;
 import java.awt.*;
-import java.awt.event.*;
 
 public class UserGUI {
 
@@ -18,7 +16,7 @@ public class UserGUI {
     }
 
     public void display() {
-        UserGUIListener booking_handler  = new UserGUIListener(this);
+        refreshButtonListener booking_handler = new refreshButtonListener(this);
         JFrame window = new JFrame();
         window.setTitle("Prenota tutti gli eventi del mondo 🥳");
         window.setSize(700, 500);
