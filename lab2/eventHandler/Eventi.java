@@ -29,7 +29,7 @@ public class Eventi {
   //fare controllo se la prenotaPosti ritorna true o false [bisogna gestire il thread che vuole prenotare]
   public void Prenota(String nomeProcesso, String nomeEvento, Integer posti){
     Evento ev = eventi.get(nomeEvento);
-    if(ev.statoPrenotazioni() || !eventi.containsKey(nomeEvento)){
+    if (ev.statoPrenotazioni().get() || !eventi.containsKey(nomeEvento)) {
       ev.prenotaPosti(nomeProcesso, posti);
     }
   }
