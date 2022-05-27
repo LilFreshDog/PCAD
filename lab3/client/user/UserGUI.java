@@ -34,21 +34,9 @@ public class UserGUI {
         Tablepanel.setLayout(new BorderLayout());
         String[] columnNames = {"Evento", "Posti"};
 
-        Object[][] data = {
-          {"Coachella",300},
-          {"Tomorrowland", 150},
-          {"Lezione di PCAD", 20},
-          {"Coachella",300},
-          {"Tomorrowland", 150},
-          {"Lezione di PCAD", 20},
-          {"Coachella",300},
-          {"Tomorrowland", 150},
-          {"Lezione di PCAD", 20},
-          {"Coachella",300},
-          {"Tomorrowland", 150},
-          {"Lezione di PCAD", 20},
-          {"LA FORESTA DEI CAZZI VOLANTI NENNO", 20}
-        };
+        //getting all events from server
+        
+        String[][] data = client.lista();
         JTable table = new JTable(data, columnNames);
         Tablepanel.add(table, BorderLayout.NORTH);
     

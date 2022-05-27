@@ -22,7 +22,7 @@ public class UserClient extends Client {
 		System.out.println("Inserisci port: ");
 		int port = input.nextInt();
 		UserClient user = new UserClient(hostname, port);
-		System.out.println(user.lista());
+		input.close();
 		System.out.println(user.prenota("SAS", 100));
 		user.close();
 	}

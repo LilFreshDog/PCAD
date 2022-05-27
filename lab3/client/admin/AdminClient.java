@@ -27,7 +27,7 @@ public class AdminClient extends Client {
         return sendMessage("chiudi|"+nome);
     }
     public static void main(String[] args) {
-        AdminClient admin = new AdminClient("localhost", 8080);
+        AdminClient admin = new AdminClient("localhost", 9000);
         System.out.println(admin.lista());
         System.out.println(admin.crea("SAS", 100));
         System.out.println(admin.lista());

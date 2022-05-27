@@ -32,7 +32,7 @@ public class Client {
 		}
 	}
 
-	protected String sendMessage(String msg) {
+	public String sendMessage(String msg) {
 	out.println(msg);
 	try {
 		return in.readLine();
@@ -43,7 +43,7 @@ public class Client {
 	return null;
 	}
 
-	protected void close() {
+	public void close() {
 		try {
 			in.close();
 			out.close();
@@ -54,7 +54,7 @@ public class Client {
 		}
 	}
 
-	protected Object[][] lista() {
+	public String[][] lista() {
 		String response = sendMessage("lista");
 
 		if (Objects.equals(response, "NOEVENTS")) {
@@ -73,9 +73,10 @@ public class Client {
 			eventi.add(listEntry);
 		}	
 
-		Object[][] eventiArray = new Object[eventi.size()][];
+		String[][] eventiArray = new String[eventi.size()][];
 		for (int i = 0; i < eventi.size(); i++) {
 			eventiArray[i] = eventi.get(i);
+			System.out.println(eventiArray[i][0] + " " + eventiArray[i][1] );
 		}
 		return eventiArray;
 	}
