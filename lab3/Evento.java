@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Evento {
   private String Nome;
   private AtomicInteger Posti;
-  private Boolean prenotazioniAperte = true;
+  private AtomicBoolean prenotazioniAperte = new AtomicBoolean(true);
 
   public Evento(String Nome, Integer Posti){
     this.Nome = Nome;
@@ -21,18 +21,18 @@ public class Evento {
   }
 
   public Boolean statoPrenotazioni(){
-    return prenotazioniAperte;
+    return prenotazioniAperte.get();
   }
 
   public synchronized void chiudiPrenotazioni(){
-    prenotazioniAperte = false;
+    prenotazioniAperte.set(false);
     notifyAll();
   }
 
   public synchronized void aggiungiPosti(Integer postiNuovi){
     Posti.addAndGet(postiNuovi);
     String str = postiNuovi == 1 ? "Aggiunto 1 posto" : "Aggiunti "+postiNuovi+" posti";
-    System.out.println("🟢 " + str + " a " + Nome+" (totale: " + Posti.get() + ")");
+    System.out.println("🟢 " + str + " a " +Nome+" (totale: " + Posti.get() + ")");
     notifyAll();
   } 
  
