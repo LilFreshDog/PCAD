@@ -25,10 +25,9 @@ public class MainAdmin {
       System.out.println("🟣 esci");
       System.out.println("------------------------");
 
-      String line = "";
+      System.out.println("Cosa vuoi fare: ");
+      String line = input.nextLine();
       while(!line.equals("exit")){
-        System.out.println("Cosa vuoi fare: ");
-        line = input.nextLine();
         if(line.equals("crea")){
           System.out.println("🟨 Inserisci nome evento: ");
           String name = input.nextLine();
@@ -59,6 +58,9 @@ public class MainAdmin {
         else{
           System.out.println("🔴 Comando non riconosciuto...");
         }
+
+        System.out.println("Cosa vuoi fare: ");
+        line = input.nextLine();
       }
       input.close();
 
