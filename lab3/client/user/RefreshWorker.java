@@ -1,6 +1,7 @@
 package lab3.client.user;
 import javax.swing.*;
 import java.util.List;
+import java.awt.event.*;
 import java.awt.*;
 
 public class RefreshWorker extends SwingWorker<String, Integer> {
@@ -35,6 +36,19 @@ public class RefreshWorker extends SwingWorker<String, Integer> {
         //displaying all events from server
         JTable table = new JTable(data, columnNames);
         Tablepanel.add(table, BorderLayout.NORTH);
+        table.setEnabled(false);
+        table.addMouseListener( new MouseAdapter()
+        {
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                JTable source = (JTable)e.getSource();
+                int row = source.rowAtPoint( e.getPoint() );
+                int column = source.columnAtPoint( e.getPoint() );
+
+                gui.Eventfield.setText(source.getModel().getValueAt(row, column).toString());
+            }
+        });
 
         gui.panel.add(Tablepanel, BorderLayout.NORTH);
         gui.window.getContentPane().add(gui.panel);

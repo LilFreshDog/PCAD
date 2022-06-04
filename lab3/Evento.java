@@ -1,6 +1,7 @@
 package lab3;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.net.ProxySelector;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Evento {
@@ -38,6 +39,8 @@ public class Evento {
   } 
  
   public synchronized void prenotaPosti(String nomeProcesso, Integer postiPrenotati){
+  
+    if(postiPrenotati <= 0) return;
     if(Posti.get() < postiPrenotati){
       try {
         wait();

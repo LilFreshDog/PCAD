@@ -33,6 +33,11 @@ public class BookButtonWorker extends SwingWorker<String, Integer> {
             return;
         }
         gui.client.prenota(eventToBook, Integer.parseInt(seatsToBook));
+        if(gui.client.lista().length == 0) {
+            gui.BookButton.setEnabled(true);
+            return;
+        }
+        
         String[][] data = gui.client.lista();
 
         //preparing the table for events to be displayed

@@ -38,7 +38,6 @@ public class UserGUI {
         if(client.lista() != null) {
             JTable table = new JTable(client.lista(), columnNames);
             table.setEnabled(false);
-            Tablepanel.add(table, BorderLayout.NORTH);
             table.addMouseListener( new MouseAdapter()
             {
                 @Override
@@ -51,6 +50,7 @@ public class UserGUI {
                     Eventfield.setText(source.getModel().getValueAt(row, column).toString());
                 }
             });
+            Tablepanel.add(table, BorderLayout.NORTH);
         }
         else {
             JLabel label = new JLabel("Non ci sono eventi disponibili");
