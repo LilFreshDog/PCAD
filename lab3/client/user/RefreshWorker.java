@@ -6,11 +6,9 @@ import java.awt.*;
 
 public class RefreshWorker extends SwingWorker<String, Integer> {
 
-    private UserGUI gui;
-    private String eventToBook;
-    private String seatsToBook;
+    private UserClientGUI gui;
 
-    public RefreshWorker(UserGUI gui) {
+    public RefreshWorker(UserClientGUI gui) {
         this.gui = gui;
     }
 
@@ -26,35 +24,16 @@ public class RefreshWorker extends SwingWorker<String, Integer> {
 
     @Override
     protected void done() {
-        String[][] data = gui.client.lista();
-
-        //preparing the table for events to be displayed
-        JPanel Tablepanel = new JPanel();
-        Tablepanel.setLayout(new BorderLayout());
-        String[] columnNames = {"Evento", "Posti"};
-
-        //displaying all events from server
-        JTable table = new JTable(data, columnNames);
-        Tablepanel.add(table, BorderLayout.NORTH);
-        table.setEnabled(false);
-        table.addMouseListener( new MouseAdapter()
-        {
-            @Override
-            public void mousePressed(MouseEvent e)
-            {
-                JTable source = (JTable)e.getSource();
-                int row = source.rowAtPoint( e.getPoint() );
-                int column = source.columnAtPoint( e.getPoint() );
-
-                gui.Eventfield.setText(source.getModel().getValueAt(row, column).toString());
-            }
-        });
-
-        gui.panel.add(Tablepanel, BorderLayout.NORTH);
-        gui.window.getContentPane().add(gui.panel);
-        gui.window.setVisible(true);
-
-        gui.RefreshButton.setEnabled(true);
+        gui.eventList = gui.client.lista();
+        gui.nomiEventi.clear();
+        gui.postiEventi.clear();
+        for (int i=0; i<gui.eventList.length; i++){
+            gui.nomiEventi.add(gui.eventList[i][0]);
+            gui.postiEventi.add(Integer.parseInt(gui.eventList[i][1]));
+        }
+        gui.list.setListData(gui.nomiEventi.toArray());
+        gui.tastoPrenota.setEnabled(true);
+        gui.updateButton.setEnabled(true);
     }
 
 }

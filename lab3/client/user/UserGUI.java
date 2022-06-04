@@ -20,7 +20,7 @@ public class UserGUI {
     }
 
     public void display() {
-        BookButtonListener booking_handler = new BookButtonListener(this);
+        //BookButtonListener booking_handler = new BookButtonListener(this);
         window.setTitle("Prenota tutti gli eventi del mondo 🥳");
         window.setSize(700, 500);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,8 +87,8 @@ public class UserGUI {
         
         //
        
-        BookButton.addActionListener(booking_handler);
-        RefreshButton.addActionListener(new RefreshListener(this));
+        //BookButton.addActionListener(booking_handler);
+        //RefreshButton.addActionListener(new RefreshListener(this));
         inputpanel.add(prenotaEventoPanel);
         inputpanel.add(prenotaEventoPanel2);
         inputpanel.add(BookButton);

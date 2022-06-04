@@ -4,17 +4,18 @@ import java.awt.event.ActionListener;
 
 public class BookButtonListener implements ActionListener {
 
-    private UserGUI gui;
+    private UserClientGUI gui;
     private BookButtonWorker worker;
 
-    public BookButtonListener(UserGUI gui) {
+    public BookButtonListener(UserClientGUI gui) {
         this.gui = gui;
 
     }
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        gui.BookButton.setEnabled(false);
+        gui.tastoPrenota.setEnabled(false);
+        gui.updateButton.setEnabled(false);
         worker = new BookButtonWorker(gui);
         worker.execute();
     }

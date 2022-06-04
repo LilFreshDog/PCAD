@@ -3,17 +3,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RefreshListener implements ActionListener {
-  private UserGUI gui;
+  private UserClientGUI gui;
   private RefreshWorker worker;
 
-  public RefreshListener(UserGUI gui) {
+  public RefreshListener(UserClientGUI gui) {
       this.gui = gui;
 
   }
 
   @Override
   public void actionPerformed(ActionEvent ev) {
-      gui.RefreshButton.setEnabled(false);
+      gui.updateButton.setEnabled(false);
+      gui.tastoPrenota.setEnabled(false);
       worker = new RefreshWorker(gui);
       worker.execute();
   }  

@@ -8,8 +8,10 @@ public class UserClient extends Client {
 
 	public UserClient(String hostname, int port) {
 		super(hostname, port);
-		UserGUI gui = new UserGUI(this);
-		gui.display();
+		UserClientGUI gui = new UserClientGUI(this);
+		gui.setContentPane(gui.mainPanel);
+		gui.pack();
+		gui.setVisible(true);
 	}
 	
 	public String prenota(String evento, int posti) {

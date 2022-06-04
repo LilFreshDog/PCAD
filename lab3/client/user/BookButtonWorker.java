@@ -6,11 +6,11 @@ import java.awt.*;
 
 public class BookButtonWorker extends SwingWorker<String, Integer> {
 
-    private UserGUI gui;
+    private UserClientGUI gui;
     private String eventToBook;
     private String seatsToBook;
 
-    public BookButtonWorker(UserGUI gui) {
+    public BookButtonWorker(UserClientGUI gui) {
         this.gui = gui;
     }
 
@@ -26,36 +26,20 @@ public class BookButtonWorker extends SwingWorker<String, Integer> {
 
     @Override
     protected void done() {
-        eventToBook = gui.Eventfield.getText();
-        seatsToBook = gui.Seatsfield.getText();
-        if (eventToBook.equals("") || seatsToBook.equals("")) {
-            gui.BookButton.setEnabled(true);
-            return;
+        Integer selectedIndex = gui.list.getSelectedIndex();
+        gui.client.prenota(gui.nomiEventi.get(selectedIndex), Integer.parseInt(gui.spinner1.getValue().toString()));
+
+        gui.eventList = gui.client.lista();
+        gui.nomiEventi.clear();
+        gui.postiEventi.clear();
+        for (int i=0; i<gui.eventList.length; i++){
+            gui.nomiEventi.add(gui.eventList[i][0]);
+            gui.postiEventi.add(Integer.parseInt(gui.eventList[i][1]));
         }
-        gui.client.prenota(eventToBook, Integer.parseInt(seatsToBook));
-        if(gui.client.lista().length == 0) {
-            gui.BookButton.setEnabled(true);
-            return;
-        }
-        
-        String[][] data = gui.client.lista();
-
-        //preparing the table for events to be displayed
-        JPanel Tablepanel = new JPanel();
-        Tablepanel.setLayout(new BorderLayout());
-        String[] columnNames = {"Evento", "Posti"};
-
-        //displaying all events from server
-        JTable table = new JTable(data, columnNames);
-        Tablepanel.add(table, BorderLayout.NORTH);
-
-        gui.panel.add(Tablepanel, BorderLayout.NORTH);
-        gui.window.getContentPane().add(gui.panel);
-        gui.window.setVisible(true);
-
-        gui.Eventfield.setText("");
-        gui.Seatsfield.setText("");
-        gui.BookButton.setEnabled(true);
+        gui.list.setListData(gui.nomiEventi.toArray());
+        gui.postiEvento.setText("Posti disponibili: " + gui.postiEventi.get(selectedIndex));
+        gui.updateButton.setEnabled(true);
+        gui.tastoPrenota.setEnabled(true);
     }
 
 }
