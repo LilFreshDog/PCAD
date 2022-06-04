@@ -10,3 +10,4 @@
 ./client/user/UserGUI.java
 ./client/user/UserGUIWorker.java
 ./client/user/UserClient.java
+./MainAdmin.java

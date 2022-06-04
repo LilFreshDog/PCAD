@@ -1,6 +1,7 @@
 package lab3;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicBoolean
 
 public class Evento {
   private String Nome;
