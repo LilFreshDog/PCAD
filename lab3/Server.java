@@ -55,13 +55,14 @@ public class Server implements Runnable {
     }
 
     while (!isStopped()) {
+      System.out.println("🟡 Waiting for a client connection...");
       Socket clientSocket;
       try {
         clientSocket = this.serverSocket.accept();
-        System.out.println("\n🥳 accettata la connessione al client");
+        System.out.println("\n🟢 Client connected from " + clientSocket.getInetAddress() + ":" + clientSocket.getPort());
       } catch (IOException e) {
         if (isStopped()) {
-          System.out.println("❌Server Stopped.");
+          System.out.println("❌ Server Stopped.");
           return;
         }
         throw new RuntimeException("Error accepting client connection", e);

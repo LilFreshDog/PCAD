@@ -11,9 +11,9 @@ public class MainAdmin {
     try{
       //create the admin and create some events
       Scanner input = new Scanner(System.in);
-      System.out.println("Inserisci hostname: ");
+      System.out.println("🟡 Inserisci hostname: ");
       String hostname = input.nextLine();
-      System.out.println("Inserisci porta: ");
+      System.out.println("🟡 Inserisci porta: ");
       int port = input.nextInt();
       AdminClient admin = new AdminClient(hostname, port);
 
@@ -25,10 +25,9 @@ public class MainAdmin {
       System.out.println("🟣 esci");
       System.out.println("------------------------");
 
-      String line = "";
-      while(line != "exit"){
-        System.out.println("Cosa vuoi fare: ");
-        line = input.nextLine();
+      System.out.println("Cosa vuoi fare: ");
+      String line = input.nextLine();
+      while(!line.equals("exit")){
         if(line.equals("crea")){
           System.out.println("🟨 Inserisci nome evento: ");
           String name = input.nextLine();
@@ -59,6 +58,9 @@ public class MainAdmin {
         else{
           System.out.println("🔴 Comando non riconosciuto...");
         }
+
+        System.out.println("Cosa vuoi fare: ");
+        line = input.nextLine();
       }
       input.close();
 
