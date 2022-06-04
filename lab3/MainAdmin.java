@@ -26,7 +26,7 @@ public class MainAdmin {
       System.out.println("------------------------");
 
       String line = "";
-      while(line != "exit"){
+      while(!line.equals("exit")){
         System.out.println("Cosa vuoi fare: ");
         line = input.nextLine();
         if(line.equals("crea")){
