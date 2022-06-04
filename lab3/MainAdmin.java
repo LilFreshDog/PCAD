@@ -11,9 +11,9 @@ public class MainAdmin {
     try{
       //create the admin and create some events
       Scanner input = new Scanner(System.in);
-      System.out.println("Inserisci hostname: ");
+      System.out.println("🟡 Inserisci hostname: ");
       String hostname = input.nextLine();
-      System.out.println("Inserisci porta: ");
+      System.out.println("🟡 Inserisci porta: ");
       int port = input.nextInt();
       AdminClient admin = new AdminClient(hostname, port);
 
