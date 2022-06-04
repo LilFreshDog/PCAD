@@ -77,7 +77,6 @@ public class Client {
 		String[][] eventiArray = new String[eventi.size()][];
 		for (int i = 0; i < eventi.size(); i++) {
 			eventiArray[i] = eventi.get(i);
-			System.out.println(eventiArray[i][0] + " " + eventiArray[i][1]);
 		}
 		return eventiArray;
 	}
