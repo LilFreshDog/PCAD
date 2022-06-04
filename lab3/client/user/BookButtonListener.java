@@ -1,17 +1,15 @@
 package lab3.client.user;
-import javax.swing.SwingUtilities;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
-public class UserGUIListener implements ActionListener {
+public class BookButtonListener implements ActionListener {
 
     private UserGUI gui;
     private UserGUIWorker worker;
 
-    public UserGUIListener(UserGUI gui) {
+    public BookButtonListener(UserGUI gui) {
         this.gui = gui;
+
     }
 
     @Override

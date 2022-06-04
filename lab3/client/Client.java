@@ -23,6 +23,7 @@ public class Client {
 			System.exit(1);
 		}
 
+		System.out.println("🟢 CLIENT CONNESSO AL SERVER");
 		try {
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -32,7 +33,7 @@ public class Client {
 		}
 	}
 
-	protected String sendMessage(String msg) {
+	public String sendMessage(String msg) {
 	out.println(msg);
 	try {
 		return in.readLine();
@@ -43,7 +44,7 @@ public class Client {
 	return null;
 	}
 
-	protected void close() {
+	public void close() {
 		try {
 			in.close();
 			out.close();
@@ -54,7 +55,7 @@ public class Client {
 		}
 	}
 
-	protected Object[][] lista() {
+	public String[][] lista() {
 		String response = sendMessage("lista");
 
 		if (Objects.equals(response, "NOEVENTS")) {
@@ -69,13 +70,14 @@ public class Client {
 
 		String[] commands = response.split("&");
 		for (String command : commands) {
-			String[] listEntry = command.split("|");
+			String[] listEntry = command.split("\\|");
 			eventi.add(listEntry);
 		}	
 
-		Object[][] eventiArray = new Object[eventi.size()][];
+		String[][] eventiArray = new String[eventi.size()][];
 		for (int i = 0; i < eventi.size(); i++) {
 			eventiArray[i] = eventi.get(i);
+			System.out.println(eventiArray[i][0] + " " + eventiArray[i][1]);
 		}
 		return eventiArray;
 	}

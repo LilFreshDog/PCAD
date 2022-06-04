@@ -1,11 +1,12 @@
 package lab2.eventHandler;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Evento {
   private String Nome;
   private AtomicInteger Posti;
-  private Boolean prenotazioniAperte = true;
+  private AtomicBoolean prenotazioniAperte = new AtomicBoolean(true);
 
   public Evento(String Nome, Integer Posti){
     this.Nome = Nome;
@@ -20,12 +21,12 @@ public class Evento {
     return Posti.get();
   }
 
-  public Boolean statoPrenotazioni(){
+  public AtomicBoolean statoPrenotazioni() {
     return prenotazioniAperte;
   }
 
   public synchronized void chiudiPrenotazioni(){
-    prenotazioniAperte = false;
+    prenotazioniAperte.set(false);
     notifyAll();
   }
 
@@ -41,7 +42,7 @@ public class Evento {
       try {
         wait();
         // le prenotazioni sono ancora aperte o l'evente esiste ancora?
-        if (!this.statoPrenotazioni())
+        if (!this.statoPrenotazioni().get())
           return;
         String str1 = postiPrenotati == 1 ? "1 posto" : postiPrenotati + " posti";
         String str2 = this.getPosti() == 1 ? "è disponibile 1 solo posto"

@@ -1,9 +1,7 @@
 package lab3.client.user;
 
 import javax.swing.*;
-import org.w3c.dom.events.Event;
 import java.awt.*;
-import java.awt.event.*;
 
 public class UserGUI {
 
@@ -12,20 +10,20 @@ public class UserGUI {
     protected JTextField Eventfield = new JTextField();
     protected JTextField Seatsfield = new JTextField();
     protected JButton BookButton = new JButton("Prenota");
+    protected JFrame window = new JFrame();
+    protected JPanel panel = new JPanel();
 
     public UserGUI(UserClient client){
       this.client = client;
     }
 
     public void display() {
-        UserGUIListener booking_handler  = new UserGUIListener(this);
-        JFrame window = new JFrame();
+        BookButtonListener booking_handler = new BookButtonListener(this);
         window.setTitle("Prenota tutti gli eventi del mondo 🥳");
         window.setSize(700, 500);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
         //setting up the panel to add everything
-        JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.PINK);
         
@@ -34,21 +32,8 @@ public class UserGUI {
         Tablepanel.setLayout(new BorderLayout());
         String[] columnNames = {"Evento", "Posti"};
 
-        Object[][] data = {
-          {"Coachella",300},
-          {"Tomorrowland", 150},
-          {"Lezione di PCAD", 20},
-          {"Coachella",300},
-          {"Tomorrowland", 150},
-          {"Lezione di PCAD", 20},
-          {"Coachella",300},
-          {"Tomorrowland", 150},
-          {"Lezione di PCAD", 20},
-          {"Coachella",300},
-          {"Tomorrowland", 150},
-          {"Lezione di PCAD", 20},
-          {"LA FORESTA DEI CAZZI VOLANTI NENNO", 20}
-        };
+        //displaying all events from server
+        String[][] data = client.lista();
         JTable table = new JTable(data, columnNames);
         Tablepanel.add(table, BorderLayout.NORTH);
     
