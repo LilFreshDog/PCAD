@@ -26,14 +26,5 @@ public class AdminClient extends Client {
     public String chiudi(String nome){
         return sendMessage("chiudi|"+nome);
     }
-    public static void main(String[] args) {
-        AdminClient admin = new AdminClient("localhost", 9000);
-        System.out.println(admin.lista());
-        System.out.println(admin.crea("SAS", 100));
-        System.out.println(admin.lista());
-        //System.out.println(admin.aggiungi("SAS", 50));
-        //System.out.println(admin.chiudi("SAS"));
-        //System.out.println(admin.cancella("SAS"));
-        admin.close();
-    }
+
 }

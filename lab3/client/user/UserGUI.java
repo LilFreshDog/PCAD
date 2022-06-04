@@ -10,20 +10,20 @@ public class UserGUI {
     protected JTextField Eventfield = new JTextField();
     protected JTextField Seatsfield = new JTextField();
     protected JButton BookButton = new JButton("Prenota");
+    protected JFrame window = new JFrame();
+    protected JPanel panel = new JPanel();
 
     public UserGUI(UserClient client){
       this.client = client;
     }
 
     public void display() {
-        refreshButtonListener booking_handler = new refreshButtonListener(this);
-        JFrame window = new JFrame();
+        BookButtonListener booking_handler = new BookButtonListener(this);
         window.setTitle("Prenota tutti gli eventi del mondo 🥳");
         window.setSize(700, 500);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
         //setting up the panel to add everything
-        JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.PINK);
         
@@ -32,8 +32,7 @@ public class UserGUI {
         Tablepanel.setLayout(new BorderLayout());
         String[] columnNames = {"Evento", "Posti"};
 
-        //getting all events from server
-        
+        //displaying all events from server
         String[][] data = client.lista();
         JTable table = new JTable(data, columnNames);
         Tablepanel.add(table, BorderLayout.NORTH);
