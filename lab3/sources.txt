@@ -1,0 +1,12 @@
+./Eventi.java
+./Evento.java
+./Main.java
+./Server.java
+./WorkerRunnable.java
+./client/Client.java
+./client/admin/AdminGUI.java
+./client/admin/AdminClient.java
+./client/user/BookButtonListener.java
+./client/user/UserGUI.java
+./client/user/UserGUIWorker.java
+./client/user/UserClient.java

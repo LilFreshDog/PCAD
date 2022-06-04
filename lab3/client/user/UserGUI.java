@@ -2,6 +2,7 @@ package lab3.client.user;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class UserGUI {
 
@@ -35,6 +36,8 @@ public class UserGUI {
         //displaying all events from server
         String[][] data = client.lista();
         JTable table = new JTable(data, columnNames);
+        table.setEnabled(false);
+        
         Tablepanel.add(table, BorderLayout.NORTH);
     
         //preparing the textfield for event
@@ -53,7 +56,6 @@ public class UserGUI {
         prenotaEventoPanel.add(eventlabel,BorderLayout.NORTH);
         prenotaEventoPanel.add(Eventfield,BorderLayout.SOUTH);
         prenotaEventoPanel.setBackground(Color.PINK);
-    
     
         //------------second
         JPanel prenotaEventoPanel2 = new JPanel();
@@ -81,5 +83,17 @@ public class UserGUI {
     
         window.getContentPane().add(panel);
         window.setVisible(true);
+
+        table.addMouseListener( new MouseAdapter()
+        {
+            public void mousePressed(MouseEvent e)
+            {
+                JTable source = (JTable)e.getSource();
+                int row = source.rowAtPoint( e.getPoint() );
+                int column = source.columnAtPoint( e.getPoint() );
+
+                Eventfield.setText(source.getModel().getValueAt(row, column).toString());
+            }
+        });
     }
 }
