@@ -7,6 +7,8 @@ import java.awt.*;
 public class UserGUIWorker extends SwingWorker<String, Integer> {
 
     private UserGUI gui;
+    private String eventToBook;
+    private String seatsToBook;
 
     public UserGUIWorker(UserGUI gui) {
         this.gui = gui;
@@ -24,8 +26,12 @@ public class UserGUIWorker extends SwingWorker<String, Integer> {
 
     @Override
     protected void done() {
-        String eventToBook = gui.Eventfield.getText();
-        String seatsToBook = gui.Seatsfield.getText();
+        eventToBook = gui.Eventfield.getText();
+        seatsToBook = gui.Seatsfield.getText();
+        if (eventToBook.equals("") || seatsToBook.equals("")) {
+            gui.BookButton.setEnabled(true);
+            return;
+        }
         gui.client.prenota(eventToBook, Integer.parseInt(seatsToBook));
         String[][] data = gui.client.lista();
 
