@@ -20,7 +20,7 @@ public class MainAdmin {
       System.out.println("🛠----- ISTRUZIONI -----🛠");
       System.out.println("🟣 crea");
       System.out.println("🟣 aggiungi");
-      System.out.println("🟣 cancella");
+      System.out.println("🟣 elimina");
       System.out.println("🟣 chiudi");
       System.out.println("🟣 esci");
       System.out.println("------------------------");
@@ -41,21 +41,21 @@ public class MainAdmin {
           System.out.println("Inserisci nome evento: ");
           String name = input.nextLine();
           admin.cancella(name);
-          System.out.println("🟢 Success! Eliminato" + name);
+          System.out.println("🟢 Success! Eliminato " + name);
         }else if(line.equals("esci")){
-          System.out.println("ADMIN SESSION ENDED!");
+          System.out.println("🟡 ADMIN SESSION ENDED!");
         }else if(line.equals("aggiungi")){
           System.out.println("🟨 Inserisci nome evento: ");
           String name = input.nextLine();
           System.out.println("🟨 Inserisci numero posti: ");
           int seats = input.nextInt();
           admin.aggiungi(name, seats);
-          System.out.println("🟢 Success! Aggiunto " + seats + " posti a " + name);
+          System.out.println("🟢 Success! Aggiunti " + seats + " posti a " + name);
         }else if(line.equals("chiudi")){
           System.out.println("🟨 Inserisci nome evento: ");
           String name = input.nextLine();
           admin.chiudi(name);
-          System.out.println("🟢 Success! Chiuso " + name);
+          System.out.println("🟢 Success! Chiuse le prenotazioni " + name);
         }
         else{
           System.out.println("🔴 Comando non riconosciuto...");
