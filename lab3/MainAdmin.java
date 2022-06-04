@@ -39,7 +39,7 @@ public class MainAdmin {
         }else if(line.equals("elimina")){
           System.out.println("Inserisci nome evento: ");
           String name = input.nextLine();
-          admin.elimina(name);
+          admin.cancella(name);
           System.out.println("🟢 Success! Eliminato" + name);
         }else if(line.equals("esci")){
           System.out.println("ADMIN SESSION ENDED!");
