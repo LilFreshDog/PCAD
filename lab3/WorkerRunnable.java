@@ -98,6 +98,7 @@ public class WorkerRunnable implements Runnable {
 
 	private void listaEventi(PrintWriter output) {
 		String toReturn = "";
+
 		for (String key : eventi.eventi.keySet()) {
 			toReturn = toReturn + key + "|" + eventi.eventi.get(key).getPosti() + "&";
 		}

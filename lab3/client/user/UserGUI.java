@@ -11,6 +11,7 @@ public class UserGUI {
     protected JTextField Eventfield = new JTextField();
     protected JTextField Seatsfield = new JTextField();
     protected JButton BookButton = new JButton("Prenota");
+    protected JButton RefreshButton = new JButton("Aggiorna");
     protected JFrame window = new JFrame();
     protected JPanel panel = new JPanel();
 
@@ -34,12 +35,27 @@ public class UserGUI {
         String[] columnNames = {"Evento", "Posti"};
 
         //displaying all events from server
-        String[][] data = client.lista();
-        JTable table = new JTable(data, columnNames);
-        table.setEnabled(false);
-        
-        Tablepanel.add(table, BorderLayout.NORTH);
+        if(client.lista() != null) {
+            JTable table = new JTable(client.lista(), columnNames);
+            table.setEnabled(false);
+            Tablepanel.add(table, BorderLayout.NORTH);
+            table.addMouseListener( new MouseAdapter()
+            {
+                public void mousePressed(MouseEvent e)
+                {
+                    JTable source = (JTable)e.getSource();
+                    int row = source.rowAtPoint( e.getPoint() );
+                    int column = source.columnAtPoint( e.getPoint() );
     
+                    Eventfield.setText(source.getModel().getValueAt(row, column).toString());
+                }
+            });
+        }
+        else {
+            JLabel label = new JLabel("Non ci sono eventi disponibili");
+            Tablepanel.add(label, BorderLayout.NORTH);
+        }
+
         //preparing the textfield for event
         JPanel inputpanel = new JPanel();
         inputpanel.setLayout(new FlowLayout());
@@ -71,10 +87,11 @@ public class UserGUI {
         //
        
         BookButton.addActionListener(booking_handler);
-
+        RefreshButton.addActionListener(new RefreshListener(this));
         inputpanel.add(prenotaEventoPanel);
         inputpanel.add(prenotaEventoPanel2);
         inputpanel.add(BookButton);
+        inputpanel.add(RefreshButton);
         inputpanel.setBackground(Color.PINK); 
         
         //adding elements to the main panel and disposing them
@@ -83,17 +100,5 @@ public class UserGUI {
     
         window.getContentPane().add(panel);
         window.setVisible(true);
-
-        table.addMouseListener( new MouseAdapter()
-        {
-            public void mousePressed(MouseEvent e)
-            {
-                JTable source = (JTable)e.getSource();
-                int row = source.rowAtPoint( e.getPoint() );
-                int column = source.columnAtPoint( e.getPoint() );
-
-                Eventfield.setText(source.getModel().getValueAt(row, column).toString());
-            }
-        });
     }
 }

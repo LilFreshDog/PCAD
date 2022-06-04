@@ -23,7 +23,7 @@ public class Client {
 			System.exit(1);
 		}
 
-		System.out.println("🟢 CLIENT CONNESSO AL SERVER");
+		System.out.println("🟢 SERVER CONNECTED");
 		try {
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));

@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 public class BookButtonListener implements ActionListener {
 
     private UserGUI gui;
-    private UserGUIWorker worker;
+    private BookButtonWorker worker;
 
     public BookButtonListener(UserGUI gui) {
         this.gui = gui;
@@ -15,7 +15,7 @@ public class BookButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ev) {
         gui.BookButton.setEnabled(false);
-        worker = new UserGUIWorker(gui);
+        worker = new BookButtonWorker(gui);
         worker.execute();
     }
 }

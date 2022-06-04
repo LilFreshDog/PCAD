@@ -4,13 +4,13 @@ import javax.swing.*;
 import java.util.List;
 import java.awt.*;
 
-public class UserGUIWorker extends SwingWorker<String, Integer> {
+public class BookButtonWorker extends SwingWorker<String, Integer> {
 
     private UserGUI gui;
     private String eventToBook;
     private String seatsToBook;
 
-    public UserGUIWorker(UserGUI gui) {
+    public BookButtonWorker(UserGUI gui) {
         this.gui = gui;
     }
 

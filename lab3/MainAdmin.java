@@ -25,9 +25,11 @@ public class MainAdmin {
       System.out.println("🟣 esci");
       System.out.println("------------------------");
 
+      String line = "";
       System.out.println("Cosa vuoi fare: ");
-      String line = input.nextLine();
       while(!line.equals("exit")){
+        line = input.nextLine();
+        if(line.equals(""))continue;
         if(line.equals("crea")){
           System.out.println("🟨 Inserisci nome evento: ");
           String name = input.nextLine();
@@ -60,7 +62,6 @@ public class MainAdmin {
         }
 
         System.out.println("Cosa vuoi fare: ");
-        line = input.nextLine();
       }
       input.close();
 
