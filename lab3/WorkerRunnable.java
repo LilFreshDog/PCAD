@@ -24,12 +24,9 @@ public class WorkerRunnable implements Runnable {
 			PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true);
 			//implemnto le operazioni del worker
 			try {
-				while (parseCommand(input.readLine(), output)) {
-					//todo what?
-					System.out.println("pa");
-				}
+				while (parseCommand(input.readLine(), output)) {}
 			} catch (Exception e) {
-				System.out.println("FRERO HO FINITO DI PARSARE");
+				System.out.println("⏹ End of parsing");
 			}
 			output.close();
 			input.close();
@@ -65,10 +62,6 @@ public class WorkerRunnable implements Runnable {
 			listaEventi(output);
 			return true;
 		}
-		if (mycommand[0].equals("foresta")) {
-			System.out.println("nenno");
-			return true;
-		}
 		return false;
 	}
 
@@ -79,22 +72,22 @@ public class WorkerRunnable implements Runnable {
 	
 	private void prenotaEvento(String nome, Integer posti, PrintWriter output){
     eventi.Prenota("PIZZA",nome, posti);
-		output.println("200 ok SOOS");
+		output.println("200 ok");
   }
 
 	private void aggiungiPosti(String nome, Integer posti, PrintWriter output){
     eventi.aggiungiPosti(nome, posti);
-		output.println("200 ok SOOS");
+		output.println("200 ok");
   }
 
   private void cancellaEvento(String nome, PrintWriter output){
     eventi.Cancella(nome);
-		output.println("200 ok SOOS");
+		output.println("200 ok");
   }
 
   private void chiudiPrenotazioni(String nome, PrintWriter output){
     eventi.Chiudi(nome);
-		output.println("200 ok SOOS");
+		output.println("200 ok");
   }
 
 	private void listaEventi(PrintWriter output) {
@@ -106,7 +99,7 @@ public class WorkerRunnable implements Runnable {
 
 		if (toReturn.length() == 0) {
 			System.out.println("NO EVENTS FOUND");
-			output.println("NOEVENTS");
+			output.println("NO EVENTS");
 		} else {
 			System.out.println("SENT EVENTS: " + toReturn);
 			toReturn = toReturn.substring(0, toReturn.length() - 1);
