@@ -27,19 +27,22 @@ public class BookButtonWorker extends SwingWorker<String, Integer> {
     @Override
     protected void done() {
         Integer selectedIndex = gui.list.getSelectedIndex();
-        gui.client.prenota(gui.nomiEventi.get(selectedIndex), Integer.parseInt(gui.spinner1.getValue().toString()));
+        if (selectedIndex >= 0){
+            gui.client.prenota(gui.nomiEventi.get(selectedIndex), Integer.parseInt(gui.spinner1.getValue().toString()));
 
-        gui.eventList = gui.client.lista();
-        gui.nomiEventi.clear();
-        gui.postiEventi.clear();
-        for (int i=0; i<gui.eventList.length; i++){
-            gui.nomiEventi.add(gui.eventList[i][0]);
-            gui.postiEventi.add(Integer.parseInt(gui.eventList[i][1]));
+            gui.eventList = gui.client.lista();
+            gui.nomiEventi.clear();
+            gui.postiEventi.clear();
+            for (int i=0; i<gui.eventList.length; i++){
+                gui.nomiEventi.add(gui.eventList[i][0]);
+                gui.postiEventi.add(Integer.parseInt(gui.eventList[i][1]));
+            }
+            gui.list.setListData(gui.nomiEventi.toArray());
+            gui.postiEvento.setText("Posti disponibili: " + gui.postiEventi.get(selectedIndex));
+            gui.tastoPrenota.setEnabled(true);
         }
-        gui.list.setListData(gui.nomiEventi.toArray());
-        gui.postiEvento.setText("Posti disponibili: " + gui.postiEventi.get(selectedIndex));
+
         gui.updateButton.setEnabled(true);
-        gui.tastoPrenota.setEnabled(true);
     }
 
 }

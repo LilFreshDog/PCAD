@@ -43,7 +43,8 @@ public class MainAdmin {
           admin.cancella(name);
           System.out.println("🟢 Success! Eliminato " + name);
         }else if(line.equals("esci")){
-          System.out.println("🟡 ADMIN SESSION ENDED!");
+          System.out.println("🟡 ADMIN SESSION ENDED!\nBye-bye 👋");
+          System.exit(0);
         }else if(line.equals("aggiungi")){
           System.out.println("🟨 Inserisci nome evento: ");
           String name = input.nextLine();
@@ -56,6 +57,8 @@ public class MainAdmin {
           String name = input.nextLine();
           admin.chiudi(name);
           System.out.println("🟢 Success! Chiuse le prenotazioni " + name);
+        }else if (line.equals("sus")){
+          System.out.println("https://www.youtube.com/watch?v=ZKuDJQqy6ak");
         }
         else{
           System.out.println("🔴 Comando non riconosciuto...");

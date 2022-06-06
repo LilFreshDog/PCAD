@@ -27,13 +27,19 @@ public class RefreshWorker extends SwingWorker<String, Integer> {
         gui.eventList = gui.client.lista();
         gui.nomiEventi.clear();
         gui.postiEventi.clear();
-        for (int i=0; i<gui.eventList.length; i++){
-            gui.nomiEventi.add(gui.eventList[i][0]);
-            gui.postiEventi.add(Integer.parseInt(gui.eventList[i][1]));
+
+        if (gui.eventList == null){
+            gui.tastoPrenota.setEnabled(false);
+            gui.updateButton.setEnabled(true);
+        } else {
+            for (int i=0; i<gui.eventList.length; i++){
+                gui.nomiEventi.add(gui.eventList[i][0]);
+                gui.postiEventi.add(Integer.parseInt(gui.eventList[i][1]));
+            }
+            gui.list.setListData(gui.nomiEventi.toArray());
+            gui.tastoPrenota.setEnabled(true);
+            gui.updateButton.setEnabled(true);
         }
-        gui.list.setListData(gui.nomiEventi.toArray());
-        gui.tastoPrenota.setEnabled(true);
-        gui.updateButton.setEnabled(true);
     }
 
 }

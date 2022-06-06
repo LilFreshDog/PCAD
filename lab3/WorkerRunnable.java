@@ -25,7 +25,8 @@ public class WorkerRunnable implements Runnable {
 			//implemnto le operazioni del worker
 			try {
 				while (parseCommand(input.readLine(), output)) {
-					System.out.println("HO PARSATO TUTTE LE STRINGHE DEL MONDO ZIO");
+					//todo what?
+					System.out.println("pa");
 				}
 			} catch (Exception e) {
 				System.out.println("FRERO HO FINITO DI PARSARE");

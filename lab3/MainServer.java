@@ -1,11 +1,12 @@
 package lab3;
 
+import javax.sound.midi.SysexMessage;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Server implements Runnable {
+public class MainServer implements Runnable {
 
   protected Integer port;
   protected ServerSocket serverSocket = null;
@@ -13,7 +14,7 @@ public class Server implements Runnable {
   protected Thread runningThread = null;
   protected Eventi eventi;
 
-  public Server(int port) {
+  public MainServer(int port) {
     this.port = port;
     this.eventi = new Eventi();
   }
@@ -24,7 +25,7 @@ public class Server implements Runnable {
     System.out.println("🚀Inserisci porta: ");
     int port = input.nextInt();
     input.close();
-    Server server = new Server(port);
+    MainServer server = new MainServer(port);
     server.run();
   }
 
@@ -51,7 +52,7 @@ public class Server implements Runnable {
     try {
       this.serverSocket = new ServerSocket(this.port);
     } catch (IOException e) {
-      throw new RuntimeException("Cannot open port 8080", e);
+      throw new RuntimeException("Cannot open port", e);
     }
 
     while (!isStopped()) {
@@ -63,7 +64,7 @@ public class Server implements Runnable {
       } catch (IOException e) {
         if (isStopped()) {
           System.out.println("❌ Server Stopped.");
-          return;
+          System.exit(1);
         }
         throw new RuntimeException("Error accepting client connection", e);
       }
@@ -74,7 +75,7 @@ public class Server implements Runnable {
     System.out.println("Server Stopped.");
   }
 
-  public void StampaEventi(){
+  public void stampaEventi(){
     System.out.println("\n\n-------------- 🔩 SERVER DEBUG CONSOLE 🔩 ------------------\n\n");
     eventi.ListaEventi();
     System.out.println("\n\n------------------------------------------------------------\n\n");

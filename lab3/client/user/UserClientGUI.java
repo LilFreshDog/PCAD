@@ -24,7 +24,7 @@ public class UserClientGUI extends JFrame {
 
     public UserClientGUI(UserClient client) {
         this.client = client;
-        //aggiornaLista();
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         tastoPrenota.setEnabled(false);
         list.addListSelectionListener(new ListSelectionListener() {
@@ -40,39 +40,7 @@ public class UserClientGUI extends JFrame {
             }
         });
 
-        updateButton.addActionListener(new RefreshListener(this));/* {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                aggiornaLista();
-            }
-        });*/
-        tastoPrenota.addActionListener(new BookButtonListener(this));/* {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Integer selectedIndex = list.getSelectedIndex();
-                client.prenota(nomiEventi.get(selectedIndex), Integer.parseInt(spinner1.getValue().toString()));
-                //aggiornaLista();
-                postiEvento.setText("Posti disponibili: " + postiEventi.get(selectedIndex));
-            }
-        });*/
+        updateButton.addActionListener(new RefreshListener(this));
+        tastoPrenota.addActionListener(new BookButtonListener(this));
     }
-
-    /*public static void main(String[] args) {
-        UserClientGUI gui = new UserClientGUI(new UserClient("localhost", 9000));
-
-    }
-
-    /*void aggiornaLista(){
-        tastoPrenota.setEnabled(false);
-        eventList = client.lista();
-        nomiEventi.clear();
-        postiEventi.clear();
-        for (int i=0; i<eventList.length; i++){
-            nomiEventi.add(eventList[i][0]);
-            postiEventi.add(Integer.parseInt(eventList[i][1]));
-        }
-        list.setListData(nomiEventi.toArray());
-        tastoPrenota.setEnabled(true);
-    }*/
-
 }

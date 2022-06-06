@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="85b23e6a-6390-4dd1-aa5c-cce74c45eafe" name="Changes" comment="">
+    <list default="true" id="85b23e6a-6390-4dd1-aa5c-cce74c45eafe" name="Changes" comment="updated gui">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab3/client/user/BookButtonListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/client/user/BookButtonListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab3/Eventi.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/Eventi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab3/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/MainUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab3/MainAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/MainAdmin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab3/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/MainServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab3/WorkerRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/WorkerRunnable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab3/client/user/BookButtonWorker.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/client/user/BookButtonWorker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab3/client/user/RefreshListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/client/user/RefreshListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab3/client/user/RefreshWorker.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/client/user/RefreshWorker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab3/client/user/UserClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/client/user/UserClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab3/client/user/UserClientGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/client/user/UserClientGUI.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab3/client/user/UserClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/client/user/UserClientGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab3/client/user/UserGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab3/client/user/UserGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,25 +36,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-  </component>
-  <component name="RunManager" selected="Application.Main">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="lab3.Main" />
-      <module name="PCAD" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="lab3.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.lab3.MainAdmin">
     <configuration name="MainAdmin" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="lab3.MainAdmin" />
       <module name="PCAD" />
@@ -68,8 +58,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="lab3.Server" />
+    <configuration name="MainServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="lab3.MainServer" />
       <module name="PCAD" />
       <extension name="coverage">
         <pattern>
@@ -94,12 +84,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="lab3.MainUser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="lab3.MainUser" />
+      <module name="PCAD" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="lab3.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.lab3.MainAdmin" />
+        <item itemvalue="Application.MainServer" />
+        <item itemvalue="Application.lab3.MainUser" />
         <item itemvalue="Application.UserClientGUI" />
-        <item itemvalue="Application.MainAdmin" />
-        <item itemvalue="Application.Server" />
       </list>
     </recent_temporary>
   </component>
@@ -111,8 +114,20 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1653083099155</updated>
+      <workItem from="1654524157895" duration="5162000" />
     </task>
+    <task id="LOCAL-00001" summary="updated gui">
+      <created>1654383773539</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1654383773539</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -136,5 +151,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="updated gui" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated gui" />
   </component>
 </project>
